@@ -1,0 +1,3844 @@
+{
+  "id": "3b36b534-bcbe-4459-8dc2-50f75e504b22",
+  "revision": 0,
+  "last_node_id": 203,
+  "last_link_id": 306,
+  "nodes": [
+    {
+      "id": 90,
+      "type": "GrayWorldMasked",
+      "pos": [
+        745.0231323242188,
+        351.5658264160156
+      ],
+      "size": [
+        270,
+        126
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 197
+        },
+        {
+          "name": "mask",
+          "type": "IMAGE",
+          "link": 111
+        }
+      ],
+      "outputs": [
+        {
+          "name": "balanced_image",
+          "type": "IMAGE",
+          "links": [
+            112,
+            120
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GrayWorldMasked"
+      },
+      "widgets_values": [
+        0.8
+      ]
+    },
+    {
+      "id": 137,
+      "type": "FaceParsingModelLoader(FaceParsing)",
+      "pos": [
+        -399.1250915527344,
+        -777.0443725585938
+      ],
+      "size": [
+        348.1333923339844,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FACE_PARSING_MODEL",
+          "type": "FACE_PARSING_MODEL",
+          "links": [
+            176
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_face_parsing",
+        "ver": "1.0.5",
+        "Node name for S&R": "FaceParsingModelLoader(FaceParsing)"
+      },
+      "widgets_values": [
+        "cpu"
+      ]
+    },
+    {
+      "id": 139,
+      "type": "PreviewImage",
+      "pos": [
+        51.296016693115234,
+        -642.6058349609375
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 179
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 136,
+      "type": "FaceParse(FaceParsing)",
+      "pos": [
+        -27.83877944946289,
+        -763.6471557617188
+      ],
+      "size": [
+        241.951171875,
+        66
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "FACE_PARSING_MODEL",
+          "link": 176
+        },
+        {
+          "name": "processor",
+          "type": "FACE_PARSING_PROCESSOR",
+          "link": 177
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 178
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            179
+          ]
+        },
+        {
+          "name": "FACE_PARSING_RESULT",
+          "type": "FACE_PARSING_RESULT",
+          "links": [
+            175
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_face_parsing",
+        "ver": "1.0.5",
+        "Node name for S&R": "FaceParse(FaceParsing)"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 144,
+      "type": "ImageBlend",
+      "pos": [
+        979.5888061523438,
+        -762.5404663085938
+      ],
+      "size": [
+        270,
+        102
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 186
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 185
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            187,
+            188,
+            192
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "ImageBlend"
+      },
+      "widgets_values": [
+        1,
+        "multiply"
+      ]
+    },
+    {
+      "id": 143,
+      "type": "PreviewImage",
+      "pos": [
+        789.7135620117188,
+        -555.5807495117188
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 184
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 141,
+      "type": "MaskPreview+",
+      "pos": [
+        624.2213745117188,
+        -553.943359375
+      ],
+      "size": [
+        150.14315795898438,
+        246
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 180
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfyui_essentials",
+        "ver": "9d9f4bedfc9f0321c19faf71855e228c93bd0dc9",
+        "Node name for S&R": "MaskPreview+"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 146,
+      "type": "PreviewImage",
+      "pos": [
+        1066.8594970703125,
+        -561.4171142578125
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 187
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 138,
+      "type": "FaceParsingProcessorLoader(FaceParsing)",
+      "pos": [
+        -371.0143737792969,
+        -659.9163818359375
+      ],
+      "size": [
+        313.0230407714844,
+        26
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FACE_PARSING_PROCESSOR",
+          "type": "FACE_PARSING_PROCESSOR",
+          "links": [
+            177
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_face_parsing",
+        "ver": "1.0.5",
+        "Node name for S&R": "FaceParsingProcessorLoader(FaceParsing)"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 116,
+      "type": "PreviewAny",
+      "pos": [
+        4071.80126953125,
+        -56.21455383300781
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 140
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 149,
+      "type": "PreviewImage",
+      "pos": [
+        1067.604248046875,
+        -13.146907806396484
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 199
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 135,
+      "type": "FaceParsingResultsParser(FaceParsing)",
+      "pos": [
+        242.88870239257812,
+        -762.8207397460938
+      ],
+      "size": [
+        354.3267517089844,
+        490
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "result",
+          "type": "FACE_PARSING_RESULT",
+          "link": 175
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            180,
+            183
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_face_parsing",
+        "ver": "1.0.5",
+        "Node name for S&R": "FaceParsingResultsParser(FaceParsing)"
+      },
+      "widgets_values": [
+        false,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": 145,
+      "type": "MaskToImage",
+      "pos": [
+        621.7633666992188,
+        -761.5677490234375
+      ],
+      "size": [
+        184.62362670898438,
+        26
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 183
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            184,
+            185,
+            202
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 107,
+      "type": "PreviewAny",
+      "pos": [
+        2919.365478515625,
+        522.0553588867188
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 59,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 133
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 110,
+      "type": "PreviewAny",
+      "pos": [
+        2924.677001953125,
+        356.8812561035156
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 56,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 136
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 88,
+      "type": "RefineSkinMask",
+      "pos": [
+        752.2437133789062,
+        -10.054483413696289
+      ],
+      "size": [
+        270,
+        174
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 188
+        },
+        {
+          "name": "face_mask",
+          "type": "IMAGE",
+          "link": 202
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "refined_mask",
+          "type": "IMAGE",
+          "links": [
+            111,
+            150,
+            167,
+            199
+          ]
+        },
+        {
+          "name": "debug_json",
+          "type": "STRING",
+          "links": [
+            201
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RefineSkinMask"
+      },
+      "widgets_values": [
+        true,
+        0.12,
+        2
+      ]
+    },
+    {
+      "id": 164,
+      "type": "PreviewAny",
+      "pos": [
+        3829.632568359375,
+        92.31339263916016
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 221
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 165,
+      "type": "PreviewAny",
+      "pos": [
+        4071.3916015625,
+        96.41997528076172
+      ],
+      "size": [
+        210,
+        106.33872985839844
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 222
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 100,
+      "type": "PreviewAny",
+      "pos": [
+        2951.9990234375,
+        1136.891845703125
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 126
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 91,
+      "type": "PreviewImage",
+      "pos": [
+        1069.68408203125,
+        344.7807922363281
+      ],
+      "size": [
+        140,
+        246.00003051757812
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 112
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 82,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        2115.25439453125,
+        797.4921875
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 171
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            92
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "256",
+        10,
+        48,
+        6
+      ]
+    },
+    {
+      "id": 108,
+      "type": "PreviewAny",
+      "pos": [
+        3183.64501953125,
+        521.5763549804688
+      ],
+      "size": [
+        210,
+        98.1524658203125
+      ],
+      "flags": {},
+      "order": 61,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 134
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 101,
+      "type": "PreviewAny",
+      "pos": [
+        3203.245849609375,
+        1147.1195068359375
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 127
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 98,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        2143.951171875,
+        91.90445709228516
+      ],
+      "size": [
+        210,
+        268
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 240
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            124
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "1",
+        "256",
+        1,
+        256,
+        1
+      ]
+    },
+    {
+      "id": 125,
+      "type": "SkinAnchor",
+      "pos": [
+        1581.323486328125,
+        -784.8772583007812
+      ],
+      "size": [
+        210,
+        344
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 192
+        },
+        {
+          "name": "mask",
+          "type": "IMAGE",
+          "link": 167
+        }
+      ],
+      "outputs": [
+        {
+          "name": "stats_json",
+          "type": "STRING",
+          "links": [
+            162
+          ]
+        },
+        {
+          "name": "L",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "a",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "b",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "C",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "h",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "ITA",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "median_hex",
+          "type": "STRING",
+          "links": [
+            241
+          ]
+        },
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "links": [
+            242
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SkinAnchor"
+      },
+      "widgets_values": [
+        "",
+        true,
+        6,
+        2,
+        8000
+      ]
+    },
+    {
+      "id": 172,
+      "type": "PreviewAny",
+      "pos": [
+        1577.4683837890625,
+        -378.78082275390625
+      ],
+      "size": [
+        210,
+        141.06924438476562
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 242
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 126,
+      "type": "PreviewAny",
+      "pos": [
+        1813.587646484375,
+        -368.0906982421875
+      ],
+      "size": [
+        229.03570556640625,
+        134.9547119140625
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 162
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 128,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        1831.7872314453125,
+        -754.9401245117188
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 241
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            165
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "1",
+        "256",
+        1,
+        256,
+        0
+      ]
+    },
+    {
+      "id": 129,
+      "type": "PreviewImage",
+      "pos": [
+        2138.579833984375,
+        -757.1742553710938
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 165
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 150,
+      "type": "PreviewAny",
+      "pos": [
+        776.5867919921875,
+        201.4872283935547
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 201
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 53,
+      "type": "PreviewAny",
+      "pos": [
+        1799.0821533203125,
+        1192.7579345703125
+      ],
+      "size": [
+        285.67303466796875,
+        338.80230712890625
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 170
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 176,
+      "type": "PreviewImage",
+      "pos": [
+        2113.64111328125,
+        2253.060546875
+      ],
+      "size": [
+        266.9736633300781,
+        332.7783508300781
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 255
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 184,
+      "type": "PreviewAny",
+      "pos": [
+        3221.0849609375,
+        2528.021240234375
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 51,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 261
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 189,
+      "type": "PreviewAny",
+      "pos": [
+        4993.3466796875,
+        1135.3243408203125
+      ],
+      "size": [
+        341.8939208984375,
+        88
+      ],
+      "flags": {},
+      "order": 67,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 271
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 190,
+      "type": "PreviewAny",
+      "pos": [
+        4997.19140625,
+        1275.304443359375
+      ],
+      "size": [
+        341.8939208984375,
+        88
+      ],
+      "flags": {},
+      "order": 68,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 272
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 183,
+      "type": "PreviewAny",
+      "pos": [
+        2961.3505859375,
+        2519.7958984375
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 50,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 260
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 177,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        2115.60302734375,
+        1926.1365966796875
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 254
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            255
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "256",
+        10,
+        48,
+        6
+      ]
+    },
+    {
+      "id": 109,
+      "type": "PreviewAny",
+      "pos": [
+        3171.450927734375,
+        360.2264709472656
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 58,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 135
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 83,
+      "type": "PreviewImage",
+      "pos": [
+        2117.439453125,
+        1112.4078369140625
+      ],
+      "size": [
+        266.9736633300781,
+        332.7783508300781
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 92
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 178,
+      "type": "PreviewAny",
+      "pos": [
+        1720.0726318359375,
+        2191.1494140625
+      ],
+      "size": [
+        268.1902160644531,
+        260.4369812011719
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 253
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 175,
+      "type": "PC_MakeColorDeck_Classic",
+      "pos": [
+        1684.96923828125,
+        1917.5921630859375
+      ],
+      "size": [
+        400,
+        208
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "stats_json",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "stats_json"
+          },
+          "link": 252
+        }
+      ],
+      "outputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "links": [
+            253,
+            254,
+            257
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PC_MakeColorDeck_Classic"
+      },
+      "widgets_values": [
+        true,
+        "0:360:15",
+        "+0, +10, +50",
+        "22,48",
+        false,
+        ""
+      ]
+    },
+    {
+      "id": 130,
+      "type": "MakeColorDeckLChPlus",
+      "pos": [
+        1796.4215087890625,
+        812.0925903320312
+      ],
+      "size": [
+        281.5650329589844,
+        334
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "stats",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "stats"
+          },
+          "link": 238
+        }
+      ],
+      "outputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "links": [
+            170,
+            171,
+            243
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MakeColorDeckLChPlus"
+      },
+      "widgets_values": [
+        15,
+        "+15, -10",
+        "22, 36, 48, 56",
+        false,
+        240,
+        1.8,
+        1942313948,
+        "increment",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 106,
+      "type": "PreviewImage",
+      "pos": [
+        4021.3310546875,
+        282.8995056152344
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 65,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 132
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 196,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        3623.176513671875,
+        2609.47119140625
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 52,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 289
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            288
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "",
+        10,
+        64,
+        8
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 187,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        3633.359130859375,
+        2256.711181640625
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 49,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 266
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            270
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "",
+        5,
+        64,
+        8
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 103,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        3565.8115234375,
+        272.83966064453125
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 55,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 129
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            132
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "",
+        5,
+        64,
+        8
+      ]
+    },
+    {
+      "id": 104,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        3578.6748046875,
+        619.9528198242188
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 57,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 130
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            131
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "",
+        5,
+        64,
+        8
+      ]
+    },
+    {
+      "id": 119,
+      "type": "SeasonFromStatsConf",
+      "pos": [
+        3552.01904296875,
+        -46.49260330200195
+      ],
+      "size": [
+        224.32675170898438,
+        208
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "stats_json",
+          "type": "STRING",
+          "widget": {
+            "name": "stats_json"
+          },
+          "link": 232
+        },
+        {
+          "name": "stats",
+          "type": "DICT",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "season4",
+          "type": "STRING",
+          "links": [
+            139
+          ]
+        },
+        {
+          "name": "season12",
+          "type": "STRING",
+          "links": [
+            140,
+            229
+          ]
+        },
+        {
+          "name": "undertone",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "depth",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "clarity",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "confidence",
+          "type": "FLOAT",
+          "links": [
+            221
+          ]
+        },
+        {
+          "name": "reasons",
+          "type": "STRING",
+          "links": [
+            222
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SeasonFromStatsConf"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 111,
+      "type": "DrapeScoreK",
+      "pos": [
+        2925.99072265625,
+        -58.271141052246094
+      ],
+      "size": [
+        450.719970703125,
+        376
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "deck_hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "deck_hex_list"
+          },
+          "link": 243
+        },
+        {
+          "name": "stats",
+          "type": "STRING",
+          "widget": {
+            "name": "stats"
+          },
+          "link": 234
+        },
+        {
+          "name": "season12",
+          "type": "STRING",
+          "widget": {
+            "name": "season12"
+          },
+          "link": 229
+        }
+      ],
+      "outputs": [
+        {
+          "name": "top_hex",
+          "type": "STRING",
+          "links": [
+            129,
+            136
+          ]
+        },
+        {
+          "name": "avoid_hex",
+          "type": "STRING",
+          "links": [
+            130,
+            135
+          ]
+        },
+        {
+          "name": "scores_json",
+          "type": "STRING",
+          "links": [
+            133,
+            274
+          ]
+        },
+        {
+          "name": "ranked_hexes",
+          "type": "STRING",
+          "links": [
+            134
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeScoreK"
+      },
+      "widgets_values": [
+        "",
+        "",
+        25,
+        20,
+        20,
+        "V3",
+        true,
+        ""
+      ]
+    },
+    {
+      "id": 105,
+      "type": "PreviewImage",
+      "pos": [
+        4018.4580078125,
+        639.8910522460938
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 66,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 131
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 112,
+      "type": "ScoreNeutrals",
+      "pos": [
+        2974.844482421875,
+        789.2939453125
+      ],
+      "size": [
+        400,
+        302
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "stats_json",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "stats_json"
+          },
+          "link": 230
+        }
+      ],
+      "outputs": [
+        {
+          "name": "scores_json",
+          "type": "STRING",
+          "links": [
+            126
+          ]
+        },
+        {
+          "name": "sorted_hex_list",
+          "type": "STRING",
+          "links": [
+            127,
+            244
+          ]
+        },
+        {
+          "name": "scores_json",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ScoreNeutrals"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "",
+        "v3",
+        "20",
+        10,
+        true
+      ]
+    },
+    {
+      "id": 197,
+      "type": "PreviewImage",
+      "pos": [
+        4018.96875,
+        2618.128173828125
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 64,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 288
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 185,
+      "type": "PreviewImage",
+      "pos": [
+        4006.64111328125,
+        1904.9271240234375
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 62,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 263
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 188,
+      "type": "PreviewImage",
+      "pos": [
+        4015.409912109375,
+        2266.328369140625
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 63,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 270
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 191,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        5444.001953125,
+        796.197998046875
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 69,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 275
+        },
+        {
+          "name": "scores_json",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "scores_json"
+          },
+          "link": 279
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            277,
+            301
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "",
+        5,
+        64,
+        8
+      ]
+    },
+    {
+      "id": 113,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        3597.1875,
+        972.1050415039062
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 244
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            138,
+            303
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "5",
+        "256",
+        5,
+        64,
+        8
+      ]
+    },
+    {
+      "id": 202,
+      "type": "PreviewImage",
+      "pos": [
+        -698.9057006835938,
+        772.7554931640625
+      ],
+      "size": [
+        1110.1668701171875,
+        642.8693237304688
+      ],
+      "flags": {},
+      "order": 72,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 304
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 152,
+      "type": "HexListSkinStats",
+      "pos": [
+        2133.37060546875,
+        -42.54881286621094
+      ],
+      "size": [
+        239.10829162597656,
+        108
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 203
+        }
+      ],
+      "outputs": [
+        {
+          "name": "stats_json",
+          "type": "STRING",
+          "links": [
+            230,
+            232,
+            234,
+            256,
+            295
+          ]
+        },
+        {
+          "name": "skin_hex_median",
+          "type": "STRING",
+          "links": [
+            240
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "HexListSkinStats"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 151,
+      "type": "PC_SkinWhiteBalance",
+      "pos": [
+        1821.787109375,
+        -38.690406799316406
+      ],
+      "size": [
+        266.3267517089844,
+        136
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 207
+        }
+      ],
+      "outputs": [
+        {
+          "name": "wb_hex_list",
+          "type": "STRING",
+          "links": [
+            203
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PC_SkinWhiteBalance"
+      },
+      "widgets_values": [
+        "",
+        true,
+        6
+      ]
+    },
+    {
+      "id": 157,
+      "type": "PreviewAny",
+      "pos": [
+        1845.18505859375,
+        150.4619903564453
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 217
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 99,
+      "type": "PreviewImage",
+      "pos": [
+        1846.73583984375,
+        285.8592834472656
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 124
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 95,
+      "type": "SkinAnchor",
+      "pos": [
+        1574.2535400390625,
+        -46.97490692138672
+      ],
+      "size": [
+        210,
+        344
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 120
+        },
+        {
+          "name": "mask",
+          "type": "IMAGE",
+          "link": 150
+        }
+      ],
+      "outputs": [
+        {
+          "name": "stats_json",
+          "type": "STRING",
+          "links": [
+            238,
+            252
+          ]
+        },
+        {
+          "name": "L",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "a",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "b",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "C",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "h",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "ITA",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "median_hex",
+          "type": "STRING",
+          "links": [
+            217
+          ]
+        },
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "links": [
+            207
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SkinAnchor"
+      },
+      "widgets_values": [
+        "",
+        true,
+        6,
+        2,
+        8000
+      ]
+    },
+    {
+      "id": 203,
+      "type": "PreviewAny",
+      "pos": [
+        -1222.9000244140625,
+        1210.0599365234375
+      ],
+      "size": [
+        391.9388732910156,
+        200.4864501953125
+      ],
+      "flags": {},
+      "order": 73,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 305
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 201,
+      "type": "ComfyUI_NanoBanana",
+      "pos": [
+        -1226.2916259765625,
+        785.49951171875
+      ],
+      "size": [
+        400,
+        360
+      ],
+      "flags": {},
+      "order": 71,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 302
+        },
+        {
+          "name": "reference_image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 301
+        },
+        {
+          "name": "reference_image_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 303
+        },
+        {
+          "name": "reference_image_4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "reference_image_5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "generated_images",
+          "type": "IMAGE",
+          "links": [
+            304
+          ]
+        },
+        {
+          "name": "operation_log",
+          "type": "STRING",
+          "links": [
+            305
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "ShmuelRonen/ComfyUI-NanoBanano",
+        "ver": "9eeb8f2411fd0ff08791bdf5e24eec347456c8b8",
+        "Node name for S&R": "ComfyUI_NanoBanana"
+      },
+      "widgets_values": [
+        "Generate a 3-panel fashion portrait of the same person (reference_image_1), standing in three poses side by side (left, center, right). \nUse the reference person image for identity and body. \nApply base clothing colors from the base colors image (reference_image_3) and accent highlights from the accent colors image (reference_image_2). \nStyle each panel differently in good fashionable combinations of the color palette, but maintain consistency in face and body. \nBackground should remain clean and uniform. \nPhotorealistic, editorial-quality image.",
+        "generate",
+        "AIzaSyBE1yjQFk_HyDwwXKZVt25Sy58ha6VBe7Q",
+        1,
+        0.8,
+        "high",
+        "16:9",
+        true,
+        true
+      ]
+    },
+    {
+      "id": 200,
+      "type": "PreviewAny",
+      "pos": [
+        2104.654541015625,
+        406.3957214355469
+      ],
+      "size": [
+        277.00689697265625,
+        129.0975341796875
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 295
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        -377.90911865234375,
+        -54.89385986328125
+      ],
+      "size": [
+        340.27508544921875,
+        357.9142761230469
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            178,
+            186,
+            197,
+            302
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "priyanka-chopra.webp",
+        "image"
+      ]
+    },
+    {
+      "id": 180,
+      "type": "DrapeScoreK",
+      "pos": [
+        2955.604736328125,
+        1895.0633544921875
+      ],
+      "size": [
+        450.719970703125,
+        376
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "deck_hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "deck_hex_list"
+          },
+          "link": 257
+        },
+        {
+          "name": "stats",
+          "type": "STRING",
+          "widget": {
+            "name": "stats"
+          },
+          "link": 256
+        }
+      ],
+      "outputs": [
+        {
+          "name": "top_hex",
+          "type": "STRING",
+          "links": [
+            258,
+            262
+          ]
+        },
+        {
+          "name": "avoid_hex",
+          "type": "STRING",
+          "links": [
+            259,
+            266
+          ]
+        },
+        {
+          "name": "scores_json",
+          "type": "STRING",
+          "links": [
+            260,
+            273
+          ]
+        },
+        {
+          "name": "ranked_hexes",
+          "type": "STRING",
+          "links": [
+            261,
+            289
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeScoreK"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "",
+        20,
+        20,
+        "V3",
+        true,
+        ""
+      ]
+    },
+    {
+      "id": 182,
+      "type": "PreviewAny",
+      "pos": [
+        3216.793701171875,
+        2386.947021484375
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 259
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 181,
+      "type": "PreviewAny",
+      "pos": [
+        2945.618408203125,
+        2368.24072265625
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 258
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 186,
+      "type": "DrapeSwatchGrid",
+      "pos": [
+        3620.767822265625,
+        1892.9708251953125
+      ],
+      "size": [
+        270,
+        268
+      ],
+      "flags": {},
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "hex_list",
+          "type": "STRING",
+          "widget": {
+            "name": "hex_list"
+          },
+          "link": 262
+        }
+      ],
+      "outputs": [
+        {
+          "name": "grid",
+          "type": "IMAGE",
+          "links": [
+            263
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DrapeSwatchGrid"
+      },
+      "widgets_values": [
+        "#aabbcc,#ddeeff",
+        "",
+        "",
+        5,
+        64,
+        8
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 192,
+      "type": "PreviewImage",
+      "pos": [
+        5787.10107421875,
+        776.1297607421875
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 70,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 277
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 115,
+      "type": "PreviewAny",
+      "pos": [
+        3833.34375,
+        -49.44953155517578
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 139
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 114,
+      "type": "PreviewImage",
+      "pos": [
+        5784.5888671875,
+        1132.9249267578125
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 54,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 138
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 179,
+      "type": "PC_MergeDecksScore",
+      "pos": [
+        4963.1533203125,
+        786.253662109375
+      ],
+      "size": [
+        400,
+        258
+      ],
+      "flags": {},
+      "order": 60,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "fixed_scores_json",
+          "type": "STRING",
+          "widget": {
+            "name": "fixed_scores_json"
+          },
+          "link": 274
+        },
+        {
+          "name": "adaptive_scores_json",
+          "type": "STRING",
+          "widget": {
+            "name": "adaptive_scores_json"
+          },
+          "link": 273
+        }
+      ],
+      "outputs": [
+        {
+          "name": "diverse_scores_json",
+          "type": "STRING",
+          "links": [
+            271,
+            279
+          ]
+        },
+        {
+          "name": "hex_topk",
+          "type": "STRING",
+          "links": [
+            272,
+            275
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PC_MergeDecksScore"
+      },
+      "widgets_values": [
+        "",
+        "",
+        24,
+        18,
+        8,
+        6
+      ]
+    }
+  ],
+  "links": [
+    [
+      92,
+      82,
+      0,
+      83,
+      0,
+      "IMAGE"
+    ],
+    [
+      111,
+      88,
+      0,
+      90,
+      1,
+      "MASK"
+    ],
+    [
+      112,
+      90,
+      0,
+      91,
+      0,
+      "IMAGE"
+    ],
+    [
+      120,
+      90,
+      0,
+      95,
+      0,
+      "IMAGE"
+    ],
+    [
+      124,
+      98,
+      0,
+      99,
+      0,
+      "IMAGE"
+    ],
+    [
+      126,
+      112,
+      0,
+      100,
+      0,
+      "*"
+    ],
+    [
+      127,
+      112,
+      1,
+      101,
+      0,
+      "*"
+    ],
+    [
+      129,
+      111,
+      0,
+      103,
+      0,
+      "STRING"
+    ],
+    [
+      130,
+      111,
+      1,
+      104,
+      0,
+      "STRING"
+    ],
+    [
+      131,
+      104,
+      0,
+      105,
+      0,
+      "IMAGE"
+    ],
+    [
+      132,
+      103,
+      0,
+      106,
+      0,
+      "IMAGE"
+    ],
+    [
+      133,
+      111,
+      2,
+      107,
+      0,
+      "*"
+    ],
+    [
+      134,
+      111,
+      3,
+      108,
+      0,
+      "*"
+    ],
+    [
+      135,
+      111,
+      1,
+      109,
+      0,
+      "*"
+    ],
+    [
+      136,
+      111,
+      0,
+      110,
+      0,
+      "*"
+    ],
+    [
+      138,
+      113,
+      0,
+      114,
+      0,
+      "IMAGE"
+    ],
+    [
+      139,
+      119,
+      0,
+      115,
+      0,
+      "*"
+    ],
+    [
+      140,
+      119,
+      1,
+      116,
+      0,
+      "*"
+    ],
+    [
+      150,
+      88,
+      0,
+      95,
+      1,
+      "MASK"
+    ],
+    [
+      162,
+      125,
+      0,
+      126,
+      0,
+      "*"
+    ],
+    [
+      165,
+      128,
+      0,
+      129,
+      0,
+      "IMAGE"
+    ],
+    [
+      167,
+      88,
+      0,
+      125,
+      1,
+      "MASK"
+    ],
+    [
+      170,
+      130,
+      0,
+      53,
+      0,
+      "*"
+    ],
+    [
+      171,
+      130,
+      0,
+      82,
+      0,
+      "STRING"
+    ],
+    [
+      175,
+      136,
+      1,
+      135,
+      0,
+      "FACE_PARSING_RESULT"
+    ],
+    [
+      176,
+      137,
+      0,
+      136,
+      0,
+      "FACE_PARSING_MODEL"
+    ],
+    [
+      177,
+      138,
+      0,
+      136,
+      1,
+      "FACE_PARSING_PROCESSOR"
+    ],
+    [
+      178,
+      4,
+      0,
+      136,
+      2,
+      "IMAGE"
+    ],
+    [
+      179,
+      136,
+      0,
+      139,
+      0,
+      "IMAGE"
+    ],
+    [
+      180,
+      135,
+      0,
+      141,
+      0,
+      "MASK"
+    ],
+    [
+      183,
+      135,
+      0,
+      145,
+      0,
+      "MASK"
+    ],
+    [
+      184,
+      145,
+      0,
+      143,
+      0,
+      "IMAGE"
+    ],
+    [
+      185,
+      145,
+      0,
+      144,
+      1,
+      "IMAGE"
+    ],
+    [
+      186,
+      4,
+      0,
+      144,
+      0,
+      "IMAGE"
+    ],
+    [
+      187,
+      144,
+      0,
+      146,
+      0,
+      "IMAGE"
+    ],
+    [
+      188,
+      144,
+      0,
+      88,
+      0,
+      "IMAGE"
+    ],
+    [
+      192,
+      144,
+      0,
+      125,
+      0,
+      "IMAGE"
+    ],
+    [
+      197,
+      4,
+      0,
+      90,
+      0,
+      "IMAGE"
+    ],
+    [
+      199,
+      88,
+      0,
+      149,
+      0,
+      "IMAGE"
+    ],
+    [
+      201,
+      88,
+      1,
+      150,
+      0,
+      "*"
+    ],
+    [
+      202,
+      145,
+      0,
+      88,
+      1,
+      "IMAGE"
+    ],
+    [
+      203,
+      151,
+      0,
+      152,
+      0,
+      "STRING"
+    ],
+    [
+      207,
+      95,
+      8,
+      151,
+      0,
+      "STRING"
+    ],
+    [
+      217,
+      95,
+      7,
+      157,
+      0,
+      "*"
+    ],
+    [
+      221,
+      119,
+      5,
+      164,
+      0,
+      "*"
+    ],
+    [
+      222,
+      119,
+      6,
+      165,
+      0,
+      "*"
+    ],
+    [
+      229,
+      119,
+      1,
+      111,
+      2,
+      "STRING"
+    ],
+    [
+      230,
+      152,
+      0,
+      112,
+      0,
+      "STRING"
+    ],
+    [
+      232,
+      152,
+      0,
+      119,
+      0,
+      "STRING"
+    ],
+    [
+      234,
+      152,
+      0,
+      111,
+      1,
+      "STRING"
+    ],
+    [
+      238,
+      95,
+      0,
+      130,
+      0,
+      "STRING"
+    ],
+    [
+      240,
+      152,
+      1,
+      98,
+      0,
+      "STRING"
+    ],
+    [
+      241,
+      125,
+      7,
+      128,
+      0,
+      "STRING"
+    ],
+    [
+      242,
+      125,
+      8,
+      172,
+      0,
+      "*"
+    ],
+    [
+      243,
+      130,
+      0,
+      111,
+      0,
+      "STRING"
+    ],
+    [
+      244,
+      112,
+      1,
+      113,
+      0,
+      "STRING"
+    ],
+    [
+      252,
+      95,
+      0,
+      175,
+      0,
+      "STRING"
+    ],
+    [
+      253,
+      175,
+      0,
+      178,
+      0,
+      "*"
+    ],
+    [
+      254,
+      175,
+      0,
+      177,
+      0,
+      "STRING"
+    ],
+    [
+      255,
+      177,
+      0,
+      176,
+      0,
+      "IMAGE"
+    ],
+    [
+      256,
+      152,
+      0,
+      180,
+      1,
+      "STRING"
+    ],
+    [
+      257,
+      175,
+      0,
+      180,
+      0,
+      "STRING"
+    ],
+    [
+      258,
+      180,
+      0,
+      181,
+      0,
+      "*"
+    ],
+    [
+      259,
+      180,
+      1,
+      182,
+      0,
+      "*"
+    ],
+    [
+      260,
+      180,
+      2,
+      183,
+      0,
+      "*"
+    ],
+    [
+      261,
+      180,
+      3,
+      184,
+      0,
+      "*"
+    ],
+    [
+      262,
+      180,
+      0,
+      186,
+      0,
+      "STRING"
+    ],
+    [
+      263,
+      186,
+      0,
+      185,
+      0,
+      "IMAGE"
+    ],
+    [
+      266,
+      180,
+      1,
+      187,
+      0,
+      "STRING"
+    ],
+    [
+      270,
+      187,
+      0,
+      188,
+      0,
+      "IMAGE"
+    ],
+    [
+      271,
+      179,
+      0,
+      189,
+      0,
+      "*"
+    ],
+    [
+      272,
+      179,
+      1,
+      190,
+      0,
+      "*"
+    ],
+    [
+      273,
+      180,
+      2,
+      179,
+      1,
+      "STRING"
+    ],
+    [
+      274,
+      111,
+      2,
+      179,
+      0,
+      "STRING"
+    ],
+    [
+      275,
+      179,
+      1,
+      191,
+      0,
+      "STRING"
+    ],
+    [
+      277,
+      191,
+      0,
+      192,
+      0,
+      "IMAGE"
+    ],
+    [
+      279,
+      179,
+      0,
+      191,
+      1,
+      "STRING"
+    ],
+    [
+      288,
+      196,
+      0,
+      197,
+      0,
+      "IMAGE"
+    ],
+    [
+      289,
+      180,
+      3,
+      196,
+      0,
+      "STRING"
+    ],
+    [
+      295,
+      152,
+      0,
+      200,
+      0,
+      "*"
+    ],
+    [
+      301,
+      191,
+      0,
+      201,
+      1,
+      "IMAGE"
+    ],
+    [
+      302,
+      4,
+      0,
+      201,
+      0,
+      "IMAGE"
+    ],
+    [
+      303,
+      113,
+      0,
+      201,
+      2,
+      "IMAGE"
+    ],
+    [
+      304,
+      201,
+      0,
+      202,
+      0,
+      "IMAGE"
+    ],
+    [
+      305,
+      201,
+      1,
+      203,
+      0,
+      "*"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 3,
+      "title": "Skin Refine",
+      "bounding": [
+        735.0230712890625,
+        -89.91561126708984,
+        509.4503173828125,
+        696.4171752929688
+      ],
+      "color": "#b06634",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "Neutral Color Results",
+      "bounding": [
+        2947.6083984375,
+        704.2031860351562,
+        465.916015625,
+        598.71923828125
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 11,
+      "title": "Face Parsing",
+      "bounding": [
+        -409.1250915527344,
+        -850.6443481445312,
+        1668.7139892578125,
+        587.8236083984375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 12,
+      "title": "Results 1",
+      "bounding": [
+        3525.2978515625,
+        -129.9207000732422,
+        773.1943359375,
+        1392.8304443359375
+      ],
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 13,
+      "title": "Color Palette Extraction",
+      "bounding": [
+        2909.365478515625,
+        -131.87100219726562,
+        494.279541015625,
+        751.9266967773438
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 14,
+      "title": "Actual skin tone",
+      "bounding": [
+        1567.4683837890625,
+        -858.4772338867188,
+        791.1114501953125,
+        635.3412475585938
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 16,
+      "title": "Classic Color Grid (adaptive)",
+      "bounding": [
+        1674.96923828125,
+        1843.9923095703125,
+        720.634521484375,
+        751.8468017578125
+      ],
+      "color": "#A88",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 17,
+      "title": "Skin Tone Identifier",
+      "bounding": [
+        1564.2535400390625,
+        -120.57490539550781,
+        818.2254638671875,
+        674.4341430664062
+      ],
+      "color": "#b58b2a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 18,
+      "title": "Color Grid",
+      "bounding": [
+        1786.4215087890625,
+        723.8922119140625,
+        608.8328857421875,
+        817.6680908203125
+      ],
+      "color": "#A88",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 19,
+      "title": "Adaptive Color Palette extraction",
+      "bounding": [
+        2935.618408203125,
+        1821.46337890625,
+        505.466552734375,
+        804.5582275390625
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 20,
+      "title": "Results 2",
+      "bounding": [
+        3610.767822265625,
+        1819.370849609375,
+        628.200927734375,
+        1068.100341796875
+      ],
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 21,
+      "title": "Final Outfits",
+      "bounding": [
+        -1236.2916259765625,
+        699.1555786132812,
+        1657.552734375,
+        726.4692993164062
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 22,
+      "title": "Final Results",
+      "bounding": [
+        4953.1533203125,
+        702.52978515625,
+        1053.94775390625,
+        698.3949584960938
+      ],
+      "color": "#8A8",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.2593742460100005,
+      "offset": [
+        -2245.3035011688366,
+        -148.49567134914994
+      ]
+    },
+    "frontendVersion": "1.23.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
