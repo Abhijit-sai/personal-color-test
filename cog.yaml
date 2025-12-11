@@ -1,5 +1,5 @@
 build:
-  gpu: false
+  gpu: true
   python_version: "3.10"
   python_packages:
     - "torch==2.0.1"
