@@ -1,3 +1,6 @@
+# Configuration for Cog ⚙️
+image: r8.im/abhijit-sai/personal-color-test
+
 build:
   gpu: true
   python_version: "3.10"
