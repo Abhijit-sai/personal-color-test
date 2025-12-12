@@ -5,9 +5,9 @@ build:
   gpu: true
   python_version: "3.10"
   python_packages:
-    - "torch==2.0.1"
-    - "torchvision==0.15.2"
-    - "numpy"
+    - "torch==2.1.2"
+    - "torchvision==0.16.2"
+    - "numpy==1.26.4"
     - "Pillow"
     - "scipy"
     - "scikit-learn"

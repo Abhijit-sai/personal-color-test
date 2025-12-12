@@ -1,7 +1,7 @@
 import os
 import sys
-import torch
 import numpy as np
+import torch
 from PIL import Image
 import torchvision.transforms as transforms
 
