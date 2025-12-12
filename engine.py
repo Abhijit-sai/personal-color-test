@@ -36,10 +36,11 @@ class PersonalColorEngine:
         """
         params = tuning_params or {}
         
-        if isinstance(image_input, str):
-            image = Image.open(image_input).convert("RGB")
-        else:
+        if hasattr(image_input, "convert"):
             image = image_input.convert("RGB")
+        else:
+            # Assume it is a path (str or pathlib.Path)
+            image = Image.open(str(image_input)).convert("RGB")
 
         w, h = image.size
         # 1. Face Parsing
