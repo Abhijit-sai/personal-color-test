@@ -1,74 +1,59 @@
 # Project Summary: Personal Color Test (PCT)
 
-**Current Status:** Initialization / Phase 1 Planning
-**Last Updated:** 2025-12-12
+**Current Status:** Phase 3: UI Polish & Responsive Refinement
+**Last Updated:** 2025-12-14
+
+## Deployment Status (COMPLETED)
+- **Replicate**: 
+    - **Deployed Success**: Model hosted at `r8.im/abhijit-sai/personal-color-test`.
+    - **Infrastructure**: Upgraded to **Nvidia L40S** GPU.
+    - **Method**: GitHub Actions manual push.
+- **Web App**:
+    - **Status**: Functional "High-Fashion" UI active (`FashionResultsView`) with Split-Screen layout.
+    - **Integration**: Connected & Verified.
+    - **URL**: Localhost:3000.
 
 ## Overview
 This project aims to build an AI-powered Personal Color Analysis system.
-Phase 1 focuses on building a Replicate-hosted model (Cog) that takes a selfie and returns skin tone, season, and color recommendations.
+Phase 1 (Engine) & Phase 2 (Web Integration) are complete.
+We are now in Phase 3, refining the UI to match a premium "Vogue/High-Fashion" aesthetic, addressing specific legibility and usability feedback.
 
 ## Feature Set
-### Phase 1: Replicate Model (In Progress)
+### Phase 1: Replicate Model (Done)
 - **Input:** Single image (face selfie).
-- **Core Logic:**
-  - Face parsing (skin segmentation).
-  - Skin stats & white balance (Gray World ignored for "actual" skin tone).
-  - Seasonal classification (4-season & 12-season).
-  - Color deck generation & scoring.
-- **Output:** JSON containing:
-  - Skin hex (actual & normalized).
-  - Season details (confidence, undertone, depth, clarity).
-  - Top 10 Best Colors.
-  - Top 5 Neutrals.
-  - Top 10 Avoid Colors.
-  - Debug info.
+- **Core Logic:** Face parsing, Skin stats, Seasonal classification, Color deck generation.
+- **Output:** JSON with Skin hex, Season, Best Colors, Neutrals, Avoid Colors.
+
+### Phase 2: Web App V1 (Done)
+- **Framework**: Next.js 14 + Tailwind CSS 4.
+- **UI**: "High-Fashion" Editorial Design.
+- **Feature**: Drag & Drop Upload, Replicate API integration.
 
 ## Work Breakdown & Plan
 
-### Phase 1: Engine / Replicate Model (Completed)
-- **Project Setup**: Initialized `Project_Summary.md` and repo structure.
-- **Face Parsing**:
-  - Cloned `FaceParsing.PyTorch`.
-  - Created `face_mask.py` wrapper.
-  - Implemented logic to extract Skin/Neck labels.
-- **Engine Logic**:
-  - Created `engine.py`.
-  - Integrated `personal_color_nodes.py`.
-  - Implemented full pipeline: Masking -> Refinement -> Stats (Actual/Norm) -> Season -> Decks -> Scoring -> Merging.
-- **Cog Implementation**:
-  - Created `cog.yaml` with dependencies.
-  - Created `predict.py` with auto-download for FaceParsing weights (`model.pth` from GDrive).
-- **Testing**:
-  - Created `test_local.py` for local verification without Docker.
-  - Requires `torch`, `torchvision`, `numpy`, `PIL`, `scipy`, `sklearn`, `gdown`.
+### Phase 3: UI Polish & Feedback Loop (In Progress)
+- **Visuals & Legibility**:
+    - Fix "Avoid" palette (remove gray overlay, add warning icon).
+    - Improve Power Palette color accuracy (reduce shadows).
+    - Enhance text contrast/legibility against backgrounds.
+- **Interactivity**:
+    - **Share**: Use Native Web Share API (Image + Link).
+    - **Download**: Add button to download report.
+- **Content**:
+    - Rename "Match" to "Confidence Score".
+    - Add detailed disclaimer about AI accuracy/variables.
 
-### Usage / Verification
-To verify locally:
-```bash
-python test_local.py
-```
-
-### Tuning / Bias Correction
-The API accepts an optional `tuning_params` JSON string.
-Supported keys:
-- `undertone_tau` (float, default 0.25): Threshold for Warm vs Cool. Higher values = harder to be classified as Warm/Cool (more Neutrals).
-- `wb_max_deltaE` (float, default 6.0): Max white balance shift. Lower = closer to actual skin color.
-
-Example:
-```json
-{
-  "undertone_tau": 0.30, 
-  "wb_max_deltaE": 4.0
-}
-```
-
-
-
-### Phase 2: Backend Wrapper (Future)
-*   [ ] API Endpoint creation.
-
-### Phase 3: Frontend Web App (Future)
-*   [ ] UI/UX for upload & results.
+## Roadmap
+- [x] Phase 1: Engine & Deployment.
+- [x] Phase 2: Web App Basic Integration.
+- [ ] Phase 3: UI Polish (Feedback Implementation).
+- [ ] Phase 4: Performance Tuning (Cold boot handling).
+- [ ] Phase 5: Production Features (Auth, DB, Monetization).
 
 ## Changelog
-- **2025-12-12**: Initialized Project Summary. Analysis of `personal_color_nodes.py` complete.
+- **2025-12-14**:
+    - **UI Update**: Implemented Split-Screen (Desktop) and defined Phase 3 refinements (Avoid palette fix, Native Share, Legibility).
+    - **Infra**: Upgraded to **Nvidia L40S**.
+- **2025-12-12**: 
+    - Deployed Replicate Model.
+    - Pivoted to "High-Fashion" UI.
