@@ -41,11 +41,38 @@ export default function UploadForm({ onAnalysisStart, onAnalysisComplete, onPrev
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error || "Analysis failed");
+                throw new Error(errorData.error || `Analysis failed (Error: ${response.status})`);
             }
 
-            const data = await response.json();
-            onAnalysisComplete(data);
+            let prediction = await response.json();
+            console.log("Analysis started:", prediction.id);
+
+            // Poll for completion
+            while (
+                prediction.status !== "succeeded" &&
+                prediction.status !== "failed" &&
+                prediction.status !== "canceled"
+            ) {
+                await new Promise((resolve) => setTimeout(resolve, 1500));
+
+                const statusResponse = await fetch(`/api/predictions/${prediction.id}`);
+                if (!statusResponse.ok) {
+                    throw new Error(`Status check failed (Error: ${statusResponse.status})`);
+                }
+
+                prediction = await statusResponse.json();
+            }
+
+            if (prediction.error || prediction.status === "failed") {
+                throw new Error(prediction.error || "Analysis model failed to process image");
+            }
+
+            if (prediction.status === "canceled") {
+                throw new Error("Analysis was canceled");
+            }
+
+            onAnalysisComplete(prediction.output);
+
         } catch (err: any) {
             onError(err.message || "Something went wrong. Please try again.");
             console.error(err);

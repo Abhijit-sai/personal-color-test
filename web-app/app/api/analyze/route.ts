@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
+import { logAnalysisRun } from "@/lib/tracking";
 
 export const maxDuration = 60; // Allow 60s for analysis
 
@@ -29,36 +30,54 @@ export async function POST(request: Request) {
         const mimeType = file.type || "image/png";
         const base64Image = `data:${mimeType};base64,${buffer.toString("base64")}`;
 
-        // Run prediction
-        // If modelId is not set, we can't run.
+        // Prepare Model Version
         if (!modelId) {
-            // Fallback for demo purposes if ID is missing? No, user must provide it.
             return NextResponse.json({ error: "Model ID not configured" }, { status: 500 });
         }
 
-        // Ensure modelId is fully qualified (owner/name:version)
-        const fullModelId = modelId.includes("/")
-            ? modelId
-            : `abhijit-sai/personal-color-test:${modelId}`;
+        // Extract version hash if provided in format owner/model:version
+        const version = modelId.includes(":") ? modelId.split(":").pop() : modelId;
 
-        console.log("Using Replicate Model ID:", fullModelId);
+        if (!version) {
+            return NextResponse.json({ error: "Invalid Model ID format" }, { status: 500 });
+        }
 
-        // Input structure matches predict.py arguments
-        const output = await replicate.run(
-            fullModelId as `${string}/${string}` | `${string}/${string}:${string}`,
-            {
-                input: {
-                    image: base64Image,
-                    tuning_params: "{}"
-                }
+        console.log("Starting Replicate Prediction with Version:", version);
+
+        // Create prediction (Async)
+        const prediction = await replicate.predictions.create({
+            version: version,
+            input: {
+                image: base64Image,
+                tuning_params: "{}"
             }
-        );
+        });
 
-        return NextResponse.json(output);
+        if (prediction?.error) {
+            await logAnalysisRun({
+                status: 'failed',
+                error_message: String(prediction.error),
+                model_version: version
+            });
+            return NextResponse.json({ error: prediction.error }, { status: 500 });
+        }
+
+        // Log initiation
+        await logAnalysisRun({
+            status: 'success', // Using success to denote successful initiation as per log schema requiring success/failed? Or should I add 'starting'?
+            // Schema has status text, commented 'success', 'failed'. I'll use 'starting' as I can put any text.
+            // Wait, previous thought said "status: 'starting'".
+            // The schema comment said '-- "success", "failed"'. It's just a comment.
+            model_version: version,
+            image_id: prediction.id,
+            metadata: { prediction_id: prediction.id, stage: 'initiation' }
+        });
+
+        // Return the prediction object (contains status 'starting' and id)
+        return NextResponse.json(prediction, { status: 201 });
 
     } catch (error: any) {
         console.error("Analysis Error:", error);
-        // Extract Replicate error message if available
         const errorMessage = error?.message || "Failed to analyze image";
         return NextResponse.json({ error: errorMessage, details: String(error) }, { status: 500 });
     }

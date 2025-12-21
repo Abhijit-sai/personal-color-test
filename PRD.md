@@ -1,4 +1,4 @@
-Product Requirement Document (PRD)
+1. Product Requirement Document (PRD)
 1.1. Product overview
 
 Product name (working): Personal Color Test (PCT)
