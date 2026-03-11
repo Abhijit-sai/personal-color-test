@@ -1,4 +1,4 @@
-import { supabaseAdmin } from './supabaseClient';
+import { supabaseAdmin } from './supabaseAdmin';
 
 export interface TrackingLog {
     status: 'success' | 'failed';

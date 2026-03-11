@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* K-Beauty Palette: Soft, Airy, Pastel */
+  /* K-Beauty Palette: Warm, Luxurious, Rose-Beige */
   --background: #FDFBF7; /* Cream/Off-white */
   --foreground: #333333; /* Soft Charcoal */
   
-  --primary: #E8A09A;    /* Soft Coral/Peach */
-  --primary-hover: #D68C86;
-  --primary-light: #FCE9E8;
+  --primary: #C48B7A;    /* Warm Rose */
+  --primary-hover: #B07A6A;
+  --primary-light: #FBF0EC;
+  --primary-dark: #A06B5E;
   
   --sage: #9CAF88;       /* Muted Green */
   --sage-light: #E3E9DD;
@@ -24,6 +25,7 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
   
   --color-sage: var(--sage);
   --color-sage-light: var(--sage-light);
@@ -32,8 +34,9 @@
   --color-neutral-100: var(--neutral-100);
   --color-neutral-200: var(--neutral-200);
   
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter), var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-playfair), Georgia, serif;
   
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
@@ -45,4 +48,22 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scroll Reveal Animation ─── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Font heading class ─── */
+.font-heading {
+  font-family: var(--font-heading);
 }

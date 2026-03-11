@@ -1,0 +1,443 @@
+
+[2026-02-25T08:42:06.569Z] getServerUser Start
+Auth Header: undefined...
+Clerk userId: null
+
+[2026-02-25T08:42:16.651Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+
+[2026-02-25T08:42:16.668Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+Clerk userId: null
+
+[2026-02-25T08:42:21.970Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+
+[2026-02-25T08:42:22.967Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+
+[2026-02-25T08:42:28.820Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+
+[2026-02-25T08:42:28.955Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/api/history
+
+[2026-03-07T11:04:52.364Z] getServerUser Start
+Auth Header: undefined...
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/models/face_detection_short_range.tflite
+[Middleware] Request URL: http://localhost:3000/models/face_detection_short_range.tflite
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[Middleware] Request URL: http://localhost:3000/api/analyze
+
+[2026-03-07T11:05:02.731Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+
+[2026-03-07T11:05:02.742Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+
+[2026-03-07T11:05:12.937Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+
+[2026-03-07T11:05:16.103Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+
+[2026-03-07T11:05:49.235Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+
+[2026-03-07T11:05:49.323Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+
+[2026-03-07T11:06:00.262Z] getServerUser Start
+Auth Header: Bearer eyJhbGciOiJSUzI1NiIsImN...
+Clerk userId: null
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/api/history
+[2026-03-07T11:21:44.238Z] [getServerUser] Start
+[2026-03-07T11:21:44.240Z] [getServerUser] Auth Header present: false
+[2026-03-07T11:21:44.250Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:21:44.251Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/
+[Middleware] Request URL: http://localhost:3000/api/history
+[Middleware] Request URL: http://localhost:3000/
+[2026-03-07T11:22:30.843Z] [getServerUser] Start
+[2026-03-07T11:22:30.845Z] [getServerUser] Auth Header present: false
+[2026-03-07T11:22:30.913Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:22:30.915Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/models/face_detection_short_range.tflite
+[Middleware] Request URL: http://localhost:3000/models/face_detection_short_range.tflite
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:22:39.975Z] [getServerUser] Start
+[2026-03-07T11:22:39.977Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:22:39.993Z] [getServerUser] Start
+[2026-03-07T11:22:39.994Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:22:40.003Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:22:40.005Z] [getServerUser] Attempting manual token check (userId is null but header exists)
+[2026-03-07T11:22:40.007Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:22:40.017Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:22:40.018Z] [getServerUser] Attempting manual token check (userId is null but header exists)
+[2026-03-07T11:22:40.019Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:23:25.620Z] [getServerUser] Start
+[2026-03-07T11:23:25.621Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:23:25.622Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:23:25.628Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:23:25.629Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:23:25.636Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:23:25.637Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:23:36.885Z] [getServerUser] Start
+[2026-03-07T11:23:36.887Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:23:36.888Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:23:36.892Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:23:36.893Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:23:36.895Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:23:36.896Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:23:43.765Z] [getServerUser] Start
+[2026-03-07T11:23:43.766Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:23:43.767Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:23:43.774Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:23:43.775Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:23:43.777Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:23:43.777Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:23:43.878Z] [getServerUser] Start
+[2026-03-07T11:23:43.880Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:23:43.881Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:23:43.886Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:23:43.888Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:23:43.890Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:23:43.891Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:23:49.895Z] [getServerUser] Start
+[2026-03-07T11:23:49.896Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:23:49.898Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:23:49.904Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:23:49.907Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:23:49.908Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:23:49.910Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:24:36.167Z] [getServerUser] Start
+[2026-03-07T11:24:36.169Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:24:36.170Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:24:36.173Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:24:36.175Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:24:36.178Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:24:36.180Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:25:26.875Z] [getServerUser] Start
+[2026-03-07T11:25:26.875Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:25:26.876Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:25:26.879Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:25:26.880Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:25:26.881Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:25:26.881Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:26:12.425Z] [getServerUser] Start
+[2026-03-07T11:26:12.427Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:26:12.427Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:26:12.429Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:26:12.437Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:26:12.438Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:26:12.439Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:26:58.447Z] [getServerUser] Start
+[2026-03-07T11:26:58.447Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:26:58.449Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:26:58.450Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:26:58.451Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:26:58.451Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:26:58.452Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:27:50.063Z] [getServerUser] Start
+[2026-03-07T11:27:50.065Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:27:50.066Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:27:50.073Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:27:50.075Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:27:50.077Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:27:50.079Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:28:36.791Z] [getServerUser] Start
+[2026-03-07T11:28:36.792Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:28:36.794Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:28:36.797Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:28:36.798Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:28:36.800Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:28:36.802Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:29:22.362Z] [getServerUser] Start
+[2026-03-07T11:29:22.365Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:29:22.366Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:29:22.373Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:29:22.375Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:29:22.378Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:29:22.380Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:30:08.685Z] [getServerUser] Start
+[2026-03-07T11:30:08.686Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:30:08.687Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:30:08.690Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:30:08.691Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:30:08.691Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:30:08.692Z] [getServerUser] No Clerk userId found, returning null
+[Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:30:54.921Z] [getServerUser] Start
+[2026-03-07T11:30:54.923Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:30:54.924Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:30:54.930Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:30:54.931Z] [getServerUser] Attempting getAuth(request) fallback...
+[2026-03-07T11:30:54.932Z] [getServerUser] Clerk userId from getAuth(request): null
+[2026-03-07T11:30:54.934Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:31:08.979Z] [Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:31:09.172Z] [getServerUser] Start
+[2026-03-07T11:31:09.174Z] [getServerUser] Auth Header present: false
+[2026-03-07T11:31:09.176Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:31:09.195Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:31:09.197Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:31:09.248Z] [Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:31:09.281Z] [getServerUser] Start
+[2026-03-07T11:31:09.282Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:31:09.283Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:31:09.290Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:31:09.291Z] [getServerUser] Attempting manual Bearer token verification...
+[2026-03-07T11:31:09.298Z] [getServerUser] Clerk userId from getAuth: null
+[2026-03-07T11:31:09.300Z] [getServerUser] getAuth failed, trying to check currentUser() regardless...
+[2026-03-07T11:31:09.304Z] [getServerUser] Clerk userId from currentUser(): null
+[2026-03-07T11:31:09.306Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:31:40.973Z] [Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:31:40.994Z] [getServerUser] Start
+[2026-03-07T11:31:40.996Z] [getServerUser] Auth Header present: false
+[2026-03-07T11:31:40.997Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:31:41.002Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:31:41.004Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:31:41.041Z] [Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:31:41.061Z] [getServerUser] Start
+[2026-03-07T11:31:41.063Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:31:41.064Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:31:41.069Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:31:41.070Z] [getServerUser] Attempting manual Bearer token verification...
+[2026-03-07T11:31:41.073Z] [getServerUser] Clerk userId from getAuth: null
+[2026-03-07T11:31:41.078Z] [getServerUser] getAuth failed, trying to check currentUser() regardless...
+[2026-03-07T11:31:41.081Z] [getServerUser] Clerk userId from currentUser(): null
+[2026-03-07T11:31:41.083Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:32:28.060Z] [Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:32:28.069Z] [getServerUser] Start
+[2026-03-07T11:32:28.069Z] [getServerUser] Auth Header present: false
+[2026-03-07T11:32:28.070Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:32:28.072Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:32:28.073Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:32:28.089Z] [Middleware] Request URL: http://localhost:3000/api/analyze
+[2026-03-07T11:32:28.095Z] [getServerUser] Start
+[2026-03-07T11:32:28.096Z] [getServerUser] Auth Header present: true
+[2026-03-07T11:32:28.097Z] [getServerUser] CLERK_SECRET_KEY present: true
+[2026-03-07T11:32:28.098Z] [getServerUser] Clerk userId from auth(): null
+[2026-03-07T11:32:28.098Z] [getServerUser] Attempting manual Bearer token verification...
+[2026-03-07T11:32:28.099Z] [getServerUser] Clerk userId from getAuth: null
+[2026-03-07T11:32:28.100Z] [getServerUser] getAuth failed, trying to check currentUser() regardless...
+[2026-03-07T11:32:28.101Z] [getServerUser] Clerk userId from currentUser(): null
+[2026-03-07T11:32:28.101Z] [getServerUser] No Clerk userId found, returning null
+[2026-03-07T11:46:02.271Z] [getServerUser] Start
+[2026-03-07T11:46:02.272Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:46:09.531Z] [getServerUser] Start
+[2026-03-07T11:46:09.533Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:46:09.559Z] [getServerUser] Start
+[2026-03-07T11:46:09.560Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:38.792Z] [getServerUser] Start
+[2026-03-07T11:47:38.793Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:38.896Z] [getServerUser] Start
+[2026-03-07T11:47:38.898Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:40.225Z] [getServerUser] Start
+[2026-03-07T11:47:40.227Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:40.488Z] [getServerUser] Start
+[2026-03-07T11:47:40.490Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:42.231Z] [getServerUser] Start
+[2026-03-07T11:47:42.233Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:46.867Z] [getServerUser] Start
+[2026-03-07T11:47:46.869Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:50.526Z] [getServerUser] Start
+[2026-03-07T11:47:50.528Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:47:50.650Z] [getServerUser] Start
+[2026-03-07T11:47:50.652Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:48:38.341Z] [getServerUser] Start
+[2026-03-07T11:48:38.341Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:49:24.065Z] [getServerUser] Start
+[2026-03-07T11:49:24.066Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:49:28.676Z] [getServerUser] Start
+[2026-03-07T11:49:28.678Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:49:28.999Z] [getServerUser] Start
+[2026-03-07T11:49:29.001Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:49:43.432Z] [getServerUser] Start
+[2026-03-07T11:49:43.434Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:49:43.540Z] [getServerUser] Start
+[2026-03-07T11:49:43.541Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:50:19.695Z] [getServerUser] Start
+[2026-03-07T11:50:19.697Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:51:05.140Z] [getServerUser] Start
+[2026-03-07T11:51:05.142Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:51:18.655Z] [getServerUser] Start
+[2026-03-07T11:51:18.658Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T11:51:24.588Z] [getServerUser] Start
+[2026-03-07T11:51:24.590Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:00:20.777Z] [getServerUser] Start
+[2026-03-07T12:00:20.778Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:00:20.819Z] [getServerUser] Start
+[2026-03-07T12:00:20.821Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:00:50.920Z] [getServerUser] Start
+[2026-03-07T12:00:50.921Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:00:52.226Z] [getServerUser] Start
+[2026-03-07T12:00:52.228Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:00:57.798Z] [getServerUser] Start
+[2026-03-07T12:00:57.801Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:00:59.079Z] [getServerUser] Start
+[2026-03-07T12:00:59.082Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:02:35.593Z] [getServerUser] Start
+[2026-03-07T12:02:35.594Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:22:49.044Z] [getServerUser] Start
+[2026-03-07T12:22:49.047Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:22:49.067Z] [getServerUser] Start
+[2026-03-07T12:22:49.069Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:23:12.292Z] [getServerUser] Start
+[2026-03-07T12:23:12.294Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:23:13.503Z] [getServerUser] Start
+[2026-03-07T12:23:13.504Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:23:13.541Z] [getServerUser] Start
+[2026-03-07T12:23:13.543Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:23:15.273Z] [getServerUser] Start
+[2026-03-07T12:23:15.275Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:23:50.113Z] [getServerUser] Start
+[2026-03-07T12:23:50.114Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:23:50.226Z] [getServerUser] Start
+[2026-03-07T12:23:50.228Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:24:00.695Z] [getServerUser] Start
+[2026-03-07T12:24:00.696Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:24:01.735Z] [getServerUser] Start
+[2026-03-07T12:24:01.736Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:24:09.848Z] [getServerUser] Start
+[2026-03-07T12:24:09.849Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:24:11.052Z] [getServerUser] Start
+[2026-03-07T12:24:11.054Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:27:53.047Z] [getServerUser] Start
+[2026-03-07T12:27:53.050Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:27:53.079Z] [getServerUser] Start
+[2026-03-07T12:27:53.080Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:01.417Z] [getServerUser] Start
+[2026-03-07T12:28:01.419Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:11.218Z] [getServerUser] Start
+[2026-03-07T12:28:11.220Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:25.600Z] [getServerUser] Start
+[2026-03-07T12:28:25.601Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:26.883Z] [getServerUser] Start
+[2026-03-07T12:28:26.885Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:35.968Z] [getServerUser] Start
+[2026-03-07T12:28:35.970Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:36.954Z] [getServerUser] Start
+[2026-03-07T12:28:36.955Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:47.834Z] [getServerUser] Start
+[2026-03-07T12:28:47.836Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:49.069Z] [getServerUser] Start
+[2026-03-07T12:28:49.071Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:28:59.722Z] [getServerUser] Start
+[2026-03-07T12:28:59.723Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:29:00.792Z] [getServerUser] Start
+[2026-03-07T12:29:00.794Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:29:11.309Z] [getServerUser] Start
+[2026-03-07T12:29:11.310Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:29:11.421Z] [getServerUser] Start
+[2026-03-07T12:29:11.423Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:29:14.273Z] [getServerUser] Start
+[2026-03-07T12:29:14.274Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:29:15.189Z] [getServerUser] Start
+[2026-03-07T12:29:15.190Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:29:16.574Z] [getServerUser] Start
+[2026-03-07T12:29:16.575Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:29:17.480Z] [getServerUser] Start
+[2026-03-07T12:29:17.482Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:30:15.119Z] [getServerUser] Start
+[2026-03-07T12:30:15.120Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:30:15.249Z] [getServerUser] Start
+[2026-03-07T12:30:15.251Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:30:27.567Z] [getServerUser] Start
+[2026-03-07T12:30:27.569Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:30:28.937Z] [getServerUser] Start
+[2026-03-07T12:30:28.939Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:30:36.787Z] [getServerUser] Start
+[2026-03-07T12:30:36.788Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:30:38.087Z] [getServerUser] Start
+[2026-03-07T12:30:38.089Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:31:31.325Z] [getServerUser] Start
+[2026-03-07T12:31:31.327Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:10.025Z] [getServerUser] Start
+[2026-03-07T12:33:10.027Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:10.125Z] [getServerUser] Start
+[2026-03-07T12:33:10.127Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:17.342Z] [getServerUser] Start
+[2026-03-07T12:33:17.343Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:18.192Z] [getServerUser] Start
+[2026-03-07T12:33:18.193Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:18.610Z] [getServerUser] Start
+[2026-03-07T12:33:18.614Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:22.751Z] [getServerUser] Start
+[2026-03-07T12:33:22.752Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:23.924Z] [getServerUser] Start
+[2026-03-07T12:33:23.925Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:30.447Z] [getServerUser] Start
+[2026-03-07T12:33:30.448Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:33:31.610Z] [getServerUser] Start
+[2026-03-07T12:33:31.612Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:56:55.219Z] [getServerUser] Start
+[2026-03-07T12:56:55.223Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:58:09.670Z] [getServerUser] Start
+[2026-03-07T12:58:09.673Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:58:25.698Z] [getServerUser] Start
+[2026-03-07T12:58:25.700Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:58:50.575Z] [getServerUser] Start
+[2026-03-07T12:58:50.577Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-07T12:58:51.845Z] [getServerUser] Start
+[2026-03-07T12:58:51.847Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T06:05:17.709Z] [getServerUser] Start
+[2026-03-11T06:05:17.713Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T06:06:45.438Z] [getServerUser] Start
+[2026-03-11T06:06:45.441Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T06:07:11.740Z] [getServerUser] Start
+[2026-03-11T06:07:11.742Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T06:07:13.167Z] [getServerUser] Start
+[2026-03-11T06:07:13.168Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T06:19:46.927Z] [getServerUser] Start
+[2026-03-11T06:19:46.929Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T06:20:43.664Z] [getServerUser] Start
+[2026-03-11T06:20:43.665Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T06:20:44.535Z] [getServerUser] Start
+[2026-03-11T06:20:44.536Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T15:30:34.787Z] [getServerUser] Start
+[2026-03-11T15:30:34.788Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)
+[2026-03-11T15:32:24.934Z] [getServerUser] Start
+[2026-03-11T15:32:24.937Z] [getServerUser] Auth Bypass Active (NEXT_PUBLIC_SKIP_AUTH=true)

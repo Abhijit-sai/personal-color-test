@@ -187,7 +187,7 @@ export default function AnalysisLoader({ file, onComplete, onRetake, onUpgrade, 
                     </h3>
                     <p className="text-neutral-500 leading-relaxed">
                         {isLimitError
-                            ? "You've used your 5 free analyses! Upgrade to Pro to unlock unlimited tries and full reports."
+                            ? "You've used your 3 free analyses! Upgrade to Pro for 100 analyses per month and full reports."
                             : error}
                     </p>
                 </div>

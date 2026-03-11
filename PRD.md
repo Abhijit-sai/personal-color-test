@@ -37,59 +37,31 @@ We will wrap this logic into a Replicate model (Cog) that exposes a simple HTTP 
 
 1.2. Goals & non-goals
 
-Goals (v1–v2):
+Goals (v1–v6):
 
 V1: Color Analysis API
-
-A Replicate-hosted AI model that:
-
-Input: Single face image.
-
-Output: JSON with skin hex, season, best/avoid colors, neutrals.
-
-This can be called from any client (web, Postman, etc).
+- A Replicate-hosted AI model (Done).
 
 V2: Web App
-
-Email-based login (simple auth).
-
-Upload selfie.
-
-Call Replicate model.
-
-Render results in a simple, clean UI.
+- Core analysis flow with image upload (Done).
 
 V3: Report & “Personal Color Report” view
+- PDF and Image download functionality (Done).
 
-Screen combining:
+V4: Fashion avatars (In Progress)
+- AI-generated outfits in recommended palettes.
 
-User name (and age if provided).
+V5: Commercialization & Payments
+- Integration with Stripe for paid analysis.
+- Premium Landing Page to drive conversions.
 
-Uploaded photo.
-
-Color results.
-
-Option to download report as image or PDF.
-
-V4: Fashion avatars (extended)
-
-Given input image + color results, generate:
-
-1 Indian traditional outfit image.
-
-1 Western professional outfit image.
-
-1 Casual/party outfit image.
-
-Each uses a combination of best hexcodes.
-
-Integrate via Replicate (or another image API).
+V6: Enhanced Face Validation
+- Mandatory client-side face detection before uploading/capturing.
+- User feedback for poor lighting or non-human subjects.
 
 Non-goals (for now):
 
 Full multi-language support.
-
-Payment/subscription system.
 
 Heavy analytics dashboard.
 

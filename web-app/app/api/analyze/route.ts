@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         // profile is now part of the user object returned by getServerUser (contains tier, generations_count, id)
         const profile = user;
 
-        if (profile.tier === 'free' && profile.generations_count >= 5) {
+        if (profile.tier === 'free' && profile.generations_count >= 3) {
             return NextResponse.json({
                 error: "Free tier limit reached. Please upgrade to Pro for more analyses.",
                 code: "LIMIT_REACHED"
@@ -42,11 +42,9 @@ export async function POST(request: Request) {
             auth: replicateToken,
         });
 
-        // Convert file to base64 data URI
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         const mimeType = file.type || "image/png";
-        const base64Image = `data:${mimeType};base64,${buffer.toString("base64")}`;
 
         // Prepare Model Version
         if (!modelId) {

@@ -60,7 +60,17 @@ This project is now a full-featured "Fashion Buddy" platform. Users can create p
 - **Decision**: Segmentation upgrade (BiSeNet V2 or similar) deferred to Phase H of v2.0 roadmap; quick wins first.
 
 ## Changelog
-- **2026-03-11**:
+- **2026-03-11 (Session 2)**:
+    - **Tier Changes**: Free tier limit updated from 5 → 3 generations (`route.ts`, `AnalysisLoader.tsx`). Pro tier set to "Unlimited — Coming Soon" in landing page.
+    - **Landing Page Redesign**: Complete rewrite of `LandingPage.tsx` with 8 sections: hero, wrong-vs-right colors, how-it-works 3-step, 4-season cards, pricing (Free/Pro), final CTA, footer. Scroll-reveal animations, warm rose-beige palette, Playfair serif headings. SEO meta tags added to `layout.tsx` (title, description, keywords, OpenGraph, Twitter).
+    - **Deployment Readiness Audit**: Full audit of 14 files (auth, DB, Replicate, persistence, history, generation counting). All core flows confirmed working.
+    - **Critical Fixes for Prod**:
+        - Removed `fs.appendFileSync` from `authHelper.ts` (would crash on Vercel read-only filesystem)
+        - Removed deprecated `getAuth(request)` fallback (caused TypeScript build failure — `Request` vs `NextRequest`)
+        - Removed dead `base64Image` computation from `analyze/route.ts`
+    - **Build Status**: `npm run build` passes locally (exit code 0, all 6 routes compile). **Vercel build failed** — needs investigation next session.
+    - **Env Var Checklist**: Documented required/prohibited Vercel env vars (REPLICATE_API_TOKEN, REPLICATE_MODEL_ID, NEXT_PUBLIC_APP_URL required; SKIP_AUTH, DEV_MODE must NOT be set).
+- **2026-03-11 (Session 1)**:
     - **Replicate Deployment**: Pushed v2 engine to Replicate via GitHub Actions (commit `c192b31`). Both v1 and v2 engines live and selectable via `model_version` input param.
     - **A/B Test Validated**: Tested both engines on Replicate with same image (Siddharth). Results confirm pipeline split is working:
         - V1 classifier sees WB-corrected stats (a=18.4, b=25.8, C=31.6) — warm signal reduced by ΔE≈6.7
@@ -69,7 +79,7 @@ This project is now a full-featured "Fashion Buddy" platform. Users can create p
         - V2 confidence slightly higher (0.58 vs 0.57) due to wider margins on raw stats
         - V2 relative beard filter removed 12.2% vs V1's 5.65% — correctly filtering more shadow pixels
     - **Dev-Only UI Toggle**: Verified locally — flask icon toggle in top-left, switches between "Engine V1" (gray) and "Engine V2" (emerald green with pulse dot). Hidden in production.
-    - **Next Session**: Test with borderline warm/cool subjects and warm-lighting photos to validate undertone divergence between v1/v2.
+    - **Next Session**: Debug Vercel build failure, redesign landing page sections to match user vision, test with diverse subjects.
 - **2026-03-10**:
     - **v2 Engine**: Created `engine_v2.py` with 4 fixes: pipeline split (classify on raw stats), circular hue median, deterministic sampling (seed=42), relative beard filter thresholds.
     - **Version Selector**: Updated `predict.py` with `model_version` input param (`v1`/`v2`). Both engines initialized at setup, routable via Replicate API input.

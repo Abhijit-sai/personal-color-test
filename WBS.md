@@ -207,3 +207,17 @@ Phase 6 – QA, polish & launch
 6.2. Adjust thresholds & deck parameters if needed.
 6.3. Add basic logging & monitoring.
 6.4. Update documentation & Project_Summary.md with final feature status.
+
+Phase 7 – Commercialization & Payments (V5)
+
+7.1. Setup Stripe account and API keys.
+7.2. Implement `/api/checkout` endpoint for Stripe sessions.
+7.3. Create Landing Page with pricing and CTA.
+7.4. Implement success/cancel return pages from Stripe.
+
+Phase 8 – Enhanced Face Validation (V6)
+
+8.1. Extract MediaPipe face detection into `lib/faceDetection.ts`.
+8.2. Integrate `detectFace` into `CameraCapture.tsx` (Live mode).
+8.3. Integrate `detectFace` into `UploadForm.tsx` (Upload mode).
+8.4. Implement "No Face Detected" UI overlays with modern aesthetics.
