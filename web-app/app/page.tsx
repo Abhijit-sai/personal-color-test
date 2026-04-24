@@ -170,6 +170,9 @@ export default function Home() {
   const handleCloseReport = () => {
     setResult(null);
     setImagePreview(null);
+    setSelectedFile(null);
+    setShowUpload(false);
+    setShowCamera(false);
     if (reportSource === 'history') {
       setView('history');
     } else {
