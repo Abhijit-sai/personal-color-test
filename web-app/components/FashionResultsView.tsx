@@ -1,12 +1,19 @@
-import { Share2, Download, RefreshCw, AlertTriangle, Info, X, HelpCircle } from "lucide-react";
+import { Share2, Download, RefreshCw, AlertTriangle, Info, X, Loader2, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
+import { toPng } from "html-to-image";
 
 interface ColorResult {
     skin: {
         hex_actual: string;
         hex_normalized: string;
         hue_deg: number;
+    };
+    debug?: {
+        stats_actual?: {
+            ITA?: number;
+        };
+        reasons?: string[];
     };
     season: {
         season4: string;
@@ -25,29 +32,161 @@ interface FashionResultsViewProps {
     data: ColorResult;
     image: string | null;
     onReset: () => void;
+    onClose?: () => void;
 }
 
-export default function FashionResultsView({ data, image, onReset }: FashionResultsViewProps) {
-    const { season, skin, best_colors, neutrals, avoid_colors } = data;
-    const [isInfoOpen, setIsInfoOpen] = useState(false);
-    const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
+const STYLE_ADVICE: Record<string, { vibe: string; fashion: string; makeup: string }> = {
+    "Light Spring": {
+        vibe: "Fresh, delicate, and luminous. You shine in bright, warm, and clear pastels.",
+        fashion: "Opt for lightweight fabrics like chiffon and silk. Monochromatic light palettes or gentle color blocking works best. Avoid heavy, dark fabrics.",
+        makeup: "Peachy pinks, warm coral lips, and a dewy finish. Avoid heavy contouring or dark smokey eyes."
+    },
+    "True Spring": {
+        vibe: "Warm, radiant, and sunny. Pure warm colors with medium contrast.",
+        fashion: "Use medium-high contrast color combinations. Warm metals like pure gold elevate your look. Floral prints in bright, warm colors suit you beautifully.",
+        makeup: "Warm apricot blush, coral or warm red lips. Dewy and luminous base."
+    },
+    "Bright Spring": {
+        vibe: "Energetic, clear, and highly contrasted. You carry highly saturated, bright warm colors beautifully.",
+        fashion: "Embrace high-contrast color blocking. Glossy and smooth fabrics like silk and satin reflect your natural clarity best.",
+        makeup: "Vibrant coral or bright pink lips with a glossy finish. Keep lines crisp and clear."
+    },
+    "Light Summer": {
+        vibe: "Cool, airy, and gentle. Light cool tones with soft contrast.",
+        fashion: "Soft, flowing fabrics like linen or soft cotton in pastel cool tones. Monochromatic dressing in icy pastels looks incredibly elegant.",
+        makeup: "Soft rosy blush, cool pink lip tints, and a sheer base."
+    },
+    "True Summer": {
+        vibe: "Cool, serene, and elegant. Completely cool undertones with muted softness.",
+        fashion: "Medium-low contrast outfits. Silver jewelry is your best friend. Soft, matte textures like suede and cashmere enhance your natural elegance.",
+        makeup: "Cool mauve lips, soft rosy cheeks, and matte or satin finishes rather than high gloss."
+    },
+    "Soft Summer": {
+        vibe: "Muted, blended, and sophisticated. Cool greyed tones that are velvety and subtle.",
+        fashion: "Tonal dressing in dusty, muted shades. Matte fabrics, brushed cotton, and soft denim. Avoid high-contrast patterns.",
+        makeup: "Soft smokey eyes in taupe, dusty rose lips, and completely matte finishes."
+    },
+    "Soft Autumn": {
+        vibe: "Earthy, muted, and toasted. Warm, blended colors with low contrast.",
+        fashion: "Texture is key: corduroy, suede, soft knits, and tweed in earthy tones. Tonal layering looks very expensive on you. Antique gold metals.",
+        makeup: "Nude lips, warm peach blush, and soft diffused eyeshadow in bronze or taupe."
+    },
+    "True Autumn": {
+        vibe: "Rich, golden, and warm. The deep, vibrant colors of a fall landscape.",
+        fashion: "Medium contrast outfits with rich, warm colors. Heavy textures like leather, wool, and velvet work phenomenally well. Wear bronze and copper accessories.",
+        makeup: "Terracotta blush, warm brick red lips, and a bronzed, golden glow."
+    },
+    "Dark Autumn": {
+        vibe: "Deep, intense, and mysterious. Warm, dark colors with rich contrast.",
+        fashion: "High contrast works perfectly. Pair deep warm darks with slightly lighter earthy tones. Velvet, leather, and rich brocade enhance your depth.",
+        makeup: "Deep plum or brick red lipstick, dark bronze smokey eyes, and warm contouring."
+    },
+    "Dark Winter": {
+        vibe: "Deep, bold, and dramatic. Cool, dark colors with high contrast striking features.",
+        fashion: "High contrast dressing, pairing icy lights with deepest darks. Smooth, crisp fabrics like formal suiting and patent leather. Silver and platinum.",
+        makeup: "Deep berry or burgundy lips, dramatic black eyeliner, and cool, crisp contour."
+    },
+    "True Winter": {
+        vibe: "Vivid, striking, and icy. Pure cool tones with jewel-like clarity.",
+        fashion: "Bold color blocking with jewel tones. High contrast combinations like stark black and pristine white. Crisp, smooth, structured fabrics.",
+        makeup: "True blue-based red lipstick, classic cat-eye liner, and cool pink blush."
+    },
+    "Bright Winter": {
+        vibe: "Luminous, crystalline, and dazzling. The highest contrast with clear, cool, neon-like brightness.",
+        fashion: "Extreme contrast and vibrant jewel tones. Reflective fabrics, sequins, and patent leather. Do not shy away from the boldest, clearest colors.",
+        makeup: "Fuchsia or vivid cherry lips, high-shine finishes, and crisp, clear eye makeup."
+    }
+};
 
-    // Determine gradient overlay based on season
-    const getGradient = (seasonName: string) => {
-        const s = seasonName.toLowerCase();
-        if (s.includes("spring")) return "from-transparent via-orange-100/20 to-orange-200/90";
-        if (s.includes("summer")) return "from-transparent via-blue-100/20 to-blue-200/90";
-        if (s.includes("autumn")) return "from-transparent via-amber-100/20 to-amber-900/80";
-        if (s.includes("winter")) return "from-transparent via-purple-100/20 to-fuchsia-900/80";
-        return "from-transparent via-neutral-100/20 to-neutral-200/90";
+export default function FashionResultsView({ data, image, onReset, onClose }: FashionResultsViewProps) {
+    const { season, skin, best_colors, neutrals, avoid_colors, debug } = data;
+    const [isInfoOpen, setIsInfoOpen] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
+    const reportRef = useRef<HTMLDivElement>(null);
+
+    const _season12 = season?.season12 || "Soft Autumn";
+    const _season4 = season?.season4 || "Autumn";
+    const advice = STYLE_ADVICE[_season12] || STYLE_ADVICE["Soft Autumn"];
+    const config = { bg: "bg-[#050505]", text: "text-white/90" };
+    const itaScore = debug?.stats_actual?.ITA?.toFixed(1) || "N/A";
+    const analysisDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    // --- COLOR THEORY MATH ---
+    const hexToHSL = (hex: string) => {
+        let cleanHex = hex.replace(/^#/, '');
+        if (cleanHex.length === 3) cleanHex = cleanHex.split('').map(c => c + c).join('');
+        const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
+        const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
+        const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let h = 0, s = 0, l = (max + min) / 2;
+        if (max !== min) {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        return { h: h * 360, s: s * 100, l: l * 100, hex: '#' + cleanHex };
     };
 
-    const gradientClass = getGradient(season.season4);
+    const safeBest = best_colors || [];
+    const safeNeutrals = neutrals || [];
+
+    // Parse and sort
+    const hslNeutrals = safeNeutrals.map(hexToHSL).sort((a, b) => a.l - b.l); // Darkest to lightest
+    const hslBest = safeBest.map(hexToHSL).sort((a, b) => b.s - a.s); // Most saturated to least
+
+    const darkestNeutral = hslNeutrals[0] || { hex: "#000" };
+    const lightestNeutral = hslNeutrals[hslNeutrals.length - 1] || { hex: "#fff" };
+    const midNeutral = hslNeutrals[Math.floor(hslNeutrals.length / 2)] || darkestNeutral;
+
+    // Highest saturation for the main pop of color
+    const popColor1 = hslBest[0] || { hex: "#fff", h: 0 };
+    // Find a second pop color that has a noticeably different hue, or just pick the next best
+    const popColor2 = hslBest.find(c => Math.abs(c.h - popColor1.h) > 30) || hslBest[1] || popColor1;
+
+    // Combo 1: The Core Foundation (Dark + Light Accent)
+    // Classic high-contrast 2-piece (e.g., Black + Peach)
+    const c1_neutral = darkestNeutral.hex;
+    const c1_accent = popColor1.hex;
+
+    // Combo 2: Tonal Harmony (Light/Mid Neutral + 2 Analogous Colors)
+    const c2_neutral = midNeutral.hex;
+    const c2_color1 = hslBest[0] || { hex: "#fff" };
+    const c2_color2 = hslBest.find(c => c.hex !== c2_color1.hex && Math.abs(c.h - c2_color1.h) <= 45) || hslBest[1] || c2_color1;
+
+    // Combo 3: The Editorial Edge (Darkest Neutral + Lightest Neutral + Accent)
+    // Classic 3-piece high contrast (e.g., Black + White + Olive)
+    const c3_neutral_dark = darkestNeutral.hex;
+    const c3_neutral_light = lightestNeutral.hex;
+    const c3_accent = popColor2.hex;
+
+    const signatureCombinations = [
+        {
+            title: "The Core Foundation",
+            desc: "Your deepest neutral anchored by a highly saturated signature pop of color.",
+            colors: [c1_accent, c1_neutral] // Accent on top, dark neutral at back
+        },
+        {
+            title: "Tonal Harmony",
+            desc: "A sophisticated blend of analogous hues balanced by a mid-tone neutral.",
+            colors: [c2_color1.hex, c2_color2.hex, c2_neutral]
+        },
+        {
+            title: "The Editorial Edge",
+            desc: "High-contrast statement: your darkest and lightest neutrals framing a bold accent.",
+            colors: [c3_accent, c3_neutral_light, c3_neutral_dark] // Accent on top, light mid, dark back
+        }
+    ];
 
     const handleShare = async () => {
         const shareData = {
-            title: `My Season is ${season.season12} ✨`,
-            text: `I just found my personal color seasonal palette: ${season.season12}! Discover your true colors here:`,
+            title: `My Season is ${_season12} âœ¨`,
+            text: `I just found my personal color seasonal palette: ${_season12}! Discover your true colors here:`,
             url: window.location.origin,
         };
 
@@ -57,302 +196,329 @@ export default function FashionResultsView({ data, image, onReset }: FashionResu
             } catch (error) {
                 console.log('Error sharing:', error);
             }
-        } else {
-            alert("Sharing is not supported on this device. Copy the URL: " + window.location.origin);
         }
     };
 
-    const handlePrint = () => {
-        window.print();
+    const handleDownload = async () => {
+        if (!reportRef.current || isDownloading) return;
+        setIsDownloading(true);
+        try {
+            // Hide action buttons during capture
+            const noCapture = reportRef.current.querySelectorAll('.no-capture');
+            noCapture.forEach(el => (el as HTMLElement).style.display = 'none');
+
+            const dataUrl = await toPng(reportRef.current, {
+                quality: 1.0,
+                pixelRatio: 2,
+                backgroundColor: '#050505',
+            });
+
+            // Restore action buttons
+            noCapture.forEach(el => (el as HTMLElement).style.display = '');
+
+            const link = document.createElement('a');
+            link.download = `color-analysis-${_season12.replace(/\s+/g, '-').toLowerCase()}.png`;
+            link.href = dataUrl;
+            link.click();
+        } catch (error) {
+            console.error('Failed to generate image:', error);
+            // Restore buttons on error too
+            const noCapture = reportRef.current.querySelectorAll('.no-capture');
+            noCapture.forEach(el => (el as HTMLElement).style.display = '');
+        } finally {
+            setIsDownloading(false);
+        }
     };
 
-    const disclaimerText = "This seasonal analysis is an AI-generated estimation based on your uploaded photo. Lighting, camera quality, and shadows can affect the result. This is not a substitute for a professional in-person color analysis. Use these palettes as a guide to discover what makes you glow!";
-
     return (
-        <div className="relative w-full h-[100dvh] bg-black font-sans text-neutral-900 flex flex-col md:flex-row overflow-hidden print:h-auto print:overflow-visible print:block">
-
-            {/* --- PRINT STYLES --- */}
-            <style jsx global>{`
-                @media print {
-                    @page { 
-                        margin: 0; 
-                        size: portrait; 
-                    }
-                    body { 
-                        -webkit-print-color-adjust: exact !important; 
-                        print-color-adjust: exact !important; 
-                        background: white !important; 
-                    }
-                    .no-print { display: none !important; }
-                    .print-only { display: block !important; }
-                    
-                    /* Reset container for print */
-                    .print-container {
-                        position: static !important;
-                        height: auto !important;
-                        width: 100% !important;
-                        overflow: visible !important;
-                        padding: 2cm !important;
-                        background: white !important;
-                    }
-                    
-                    .print-break-inside { break-inside: avoid; page-break-inside: avoid; }
-                    
-                    /* Refined Typography for PDF */
-                    h1 { font-size: 48pt !important; color: black !important; margin-bottom: 0.5cm !important; }
-                    h2 { font-size: 24pt !important; color: black !important; margin-bottom: 1cm !important; }
-                    p, span:not([style*="background-color"]) { color: #333 !important; }
-
-                    /* Ensure background colors show up */
-                    [style*="background-color"] {
-                        -webkit-print-color-adjust: exact !important;
-                        print-color-adjust: exact !important;
-                    }
-
-                    ::-webkit-scrollbar { display: none; }
-                }
-            `}</style>
+        <div ref={reportRef} className={`report-container relative w-full min-h-[100dvh] ${config.bg} font-sans ${config.text}`}>
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#C48B7A]/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
 
 
-            {/* --- MODALS (Hidden on Print) --- */}
+            {/* Info Modal */}
             <AnimatePresence>
-                {/* Season Info Modal */}
                 {isInfoOpen && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm no-print"
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm no-print"
                         onClick={() => setIsInfoOpen(false)}
                     >
                         <motion.div
-                            initial={{ scale: 0.9, y: 20 }}
+                            initial={{ scale: 0.95, y: 10 }}
                             animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.9, y: 20 }}
-                            className="bg-white rounded-2xl p-6 max-w-md w-full relative"
+                            exit={{ scale: 0.95, y: 10 }}
+                            className="bg-white rounded-[2rem] p-8 max-w-sm w-full relative shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <button onClick={() => setIsInfoOpen(false)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-neutral-100">
-                                <X className="w-5 h-5 text-neutral-500" />
+                            <button onClick={() => setIsInfoOpen(false)} className="absolute top-6 right-6 p-2 rounded-full hover:bg-neutral-100 transition-colors">
+                                <X className="w-5 h-5 text-neutral-400" />
                             </button>
-                            <h3 className="text-xl font-heading font-bold mb-4">Understanding Color Seasons</h3>
+                            <h3 className="text-xl font-serif font-bold mb-4 text-[#4A3d36]">Technical Details</h3>
                             <div className="space-y-4 text-sm text-neutral-600 leading-relaxed">
-                                <p>Personal Color Analysis categorizes your coloring into one of 4 main seasons (Spring, Summer, Autumn, Winter), often subdivided into 12 subtypes.</p>
-                                <div className="grid grid-cols-1 gap-2">
-                                    <div className="p-2 bg-neutral-50 rounded">
-                                        <strong>Undertone:</strong> Warm (Yellow/Gold) vs Cool (Blue/Pink).
-                                    </div>
-                                    <div className="p-2 bg-neutral-50 rounded">
-                                        <strong>Clarity:</strong> Clear (Bright) vs Soft (Muted).
-                                    </div>
-                                    <div className="p-2 bg-neutral-50 rounded">
-                                        <strong>Depth:</strong> Light (Pale) vs Deep (Dark).
-                                    </div>
+                                <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                                    <p className="font-bold text-neutral-800 mb-1">Skin Color Coordinates</p>
+                                    <p>Detected Hex: {skin.hex_actual}</p>
+                                    <p>Hue Angle: {skin.hue_deg.toFixed(1)}Â°</p>
+                                    <p>ITA (Individual Typology Angle): {itaScore}</p>
                                 </div>
-                                <div className="p-3 bg-neutral-900 text-white rounded-lg border border-neutral-800 text-xs mt-4">
-                                    <strong>Your Result: {season.season12}</strong> indicates {season.undertone} undertones with {season.clarity} & {season.depth} qualities.
+                                <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                                    <p className="font-bold text-neutral-800 mb-1">Classification</p>
+                                    <p><strong>Season:</strong> {_season12}</p>
+                                    <p><strong>Undertone:</strong> {season.undertone}</p>
+                                    <p><strong>Depth & Clarity:</strong> {season.depth} & {season.clarity}</p>
+                                    <p><strong>AI Confidence:</strong> {(season.confidence * 100).toFixed(0)}%</p>
                                 </div>
                             </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-
-                {/* Disclaimer Modal (Mobile) */}
-                {isDisclaimerOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm no-print"
-                        onClick={() => setIsDisclaimerOpen(false)}
-                    >
-                        <motion.div
-                            initial={{ scale: 0.9, y: 20 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.9, y: 20 }}
-                            className="bg-white rounded-2xl p-6 max-w-sm w-full relative"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <button onClick={() => setIsDisclaimerOpen(false)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-neutral-100">
-                                <X className="w-5 h-5 text-neutral-500" />
-                            </button>
-                            <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
-                                <Info className="w-5 h-5" /> Disclaimer
-                            </h3>
-                            <p className="text-sm text-neutral-600 leading-relaxed">
-                                {disclaimerText}
-                            </p>
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-
-            {/* --- LEFT / BACKGROUND: IMAGE --- */}
-            {/* HIDDEN ON PRINT: The user requested the report NOT have the image. */}
-            <div className="absolute inset-0 z-0 md:relative md:w-1/2 md:h-full md:inset-auto no-print">
-                <img
-                    src={image || "/placeholder.jpg"}
-                    alt="Cover"
-                    className="w-full h-full object-cover opacity-90 md:opacity-100"
-                    crossOrigin="anonymous"
-                />
-                {/* Mobile: Scrims for text legibility */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 md:hidden" />
-                <div className={`absolute inset-0 bg-gradient-to-t ${gradientClass} opacity-90 md:hidden`} />
+            {/* TOP ACTIONS - MOBILE */}
+            <div className="fixed top-4 right-4 z-50 flex gap-2 md:hidden no-capture">
+                <button onClick={onClose || onReset} className="w-10 h-10 rounded-full bg-white/50 backdrop-blur-md shadow-sm flex items-center justify-center border border-black/5">
+                    <X className="w-4 h-4 text-black" />
+                </button>
+                <button onClick={onReset} className="w-10 h-10 rounded-full bg-white/50 backdrop-blur-md shadow-sm flex items-center justify-center border border-black/5">
+                    <RefreshCw className="w-4 h-4 text-black" />
+                </button>
             </div>
 
-            {/* --- RIGHT / FOREGROUND: CONTENT --- */}
-            {/* PRINT OPTIMIZATION: Full width, no scrolling, simple white background */}
-            <div className="absolute inset-0 z-10 md:static md:w-1/2 md:h-full md:bg-neutral-50 flex flex-col md:overflow-y-auto print-container overflow-y-auto">
 
-                {/* Header Actions - Static on mobile to allow scrolling content away */}
-                <div className="p-6 md:p-8 flex justify-between items-start md:bg-white md:border-b md:border-neutral-100 md:sticky md:top-0 md:z-20 print:static print:p-0 print:mb-8 print:border-none bg-black/20 backdrop-blur-sm md:backdrop-blur-none border-b border-white/10 md:border-none">
-                    <div className="flex items-start gap-4">
-                        <div className="text-white md:text-neutral-900 drop-shadow-md md:drop-shadow-none">
-                            <p className="text-[10px] tracking-[0.2em] font-bold uppercase opacity-90 mb-2 text-white/60 md:text-neutral-500 print:text-neutral-600">
-                                Your True Colors
-                            </p>
-                            {/* Force text-black in print to avoid white-on-white issues if parent contrast fails */}
-                            <h1 className="text-4xl md:text-6xl font-serif leading-none tracking-tighter print:text-black">
-                                {season.season4}
+            <div className="max-w-[1200px] mx-auto px-6 py-10 md:py-16">
+                
+                {/* HEADER */}
+                <header className="mb-12 pb-8 border-b border-white/10 rpt-divider rpt-header">
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+                        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
+                            {/* BACK BUTTON */}
+                            <button onClick={onClose || onReset} className="mb-6 flex items-center gap-2 text-white/50 hover:text-white transition-colors text-[11px] font-bold uppercase tracking-widest no-capture">
+                                <ArrowLeft className="w-4 h-4" />
+                                Back
+                            </button>
+                            <p className="text-[11px] font-bold uppercase tracking-[0.25em] mb-3 opacity-50 rpt-muted">Your True Colors</p>
+                            <h1 className="text-5xl md:text-6xl font-serif tracking-tight leading-none mb-4 rpt-heading">
+                                The {_season12}
                             </h1>
-                            <div className="flex items-center gap-2 mt-1">
-                                <p className="font-serif italic text-lg opacity-90 print:text-black">
-                                    You belong to <span className="underline decoration-white/30 md:decoration-neutral-300 print:decoration-neutral-300">{season.season12}</span>
-                                </p>
-                            </div>
+                            <p className="text-lg text-white/60 font-light leading-relaxed rpt-narrative">{advice.vibe}</p>
+                        </motion.div>
+                        <div className="hidden md:flex items-center gap-3 shrink-0 no-capture">
+                            <button onClick={() => setIsInfoOpen(true)} className="px-5 py-2.5 rounded-full bg-white/10 text-sm font-semibold text-white hover:bg-white/20 transition-colors flex items-center gap-2 border border-white/5">
+                                <Info className="w-4 h-4" /> Details
+                            </button>
+                            <button onClick={onReset} className="px-5 py-2.5 rounded-full bg-white/10 text-sm font-semibold text-white hover:bg-white/20 transition-colors flex items-center gap-2 border border-white/5">
+                                <RefreshCw className="w-4 h-4" /> Reset
+                            </button>
+                            <button onClick={handleDownload} disabled={isDownloading} className="px-5 py-2.5 rounded-full bg-white text-sm font-semibold text-black hover:bg-neutral-200 shadow-xl transition-colors flex items-center gap-2 disabled:opacity-50">
+                                {isDownloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />} {isDownloading ? 'Saving...' : 'Save Image'}
+                            </button>
+                            <button onClick={handleShare} className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#C48B7A] to-[#A06B5E] text-white text-sm font-semibold shadow-xl hover:brightness-110 transition-all flex items-center gap-2">
+                                <Share2 className="w-4 h-4" /> Share
+                            </button>
                         </div>
                     </div>
+                </header>
 
-                    <button onClick={onReset} className="p-2.5 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 border border-white/20 md:bg-neutral-100 md:text-neutral-600 md:border-neutral-200 md:hover:bg-neutral-200 transition-all shadow-xl md:shadow-none no-print">
-                        <RefreshCw className="w-5 h-5" />
-                    </button>
-                </div>
+                {/* BENTO BOX GRID */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-start rpt-grid">
+                    
+                    {/* LEFT COLUMN: Profile Card */}
+                    <div className="md:col-span-5 md:sticky md:top-8 flex flex-col gap-6 rpt-left">
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.1 }}
+                            className="rpt-card bg-white/5 backdrop-blur-2xl rounded-[2rem] p-6 shadow-2xl flex flex-col items-center border border-white/10"
+                        >
+                            {/* Portrait */}
+                            <div className="rpt-portrait w-full aspect-[4/5] bg-white/5 rounded-t-full rounded-b-[4rem] overflow-hidden shadow-inner mb-8 relative">
+                                {image ? (
+                                    <img src={image} className="w-full h-full object-cover" alt="User portrait" crossOrigin="anonymous" />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-white/30 font-serif">Portrait</div>
+                                )}
+                            </div>
 
-                {/* CONTENT AREA */}
-                <div className="flex-1 p-4 md:p-8 pb-32 md:pb-8">
-                    <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="w-full max-w-2xl mx-auto"
-                    >
-                        {/* Card Container */}
-                        <div className="bg-white rounded-[2.5rem] p-6 md:p-10 shadow-2xl text-neutral-900 border border-white/20 md:border-none print:shadow-none print:p-0">
-
-                            <div className="space-y-10 print:space-y-6">
-
-                                {/* Confidence Score & Stats */}
-                                <div className="flex items-center gap-5 border-b border-neutral-100 pb-6 print-break-inside">
-
-                                    {image && (
-                                        <div className="w-20 h-20 rounded-full ring-4 ring-neutral-50 overflow-hidden shadow-sm flex-shrink-0">
-                                            <img src={image} className="w-full h-full object-cover" alt="User" referrerPolicy="no-referrer" crossOrigin="anonymous" />
-                                        </div>
-                                    )}
-
-                                    <div className="flex-1 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                                        <div>
-                                            <p className="text-[10px] uppercase text-neutral-400 font-bold mb-1 tracking-widest">Undertone</p>
-                                            <p className="font-semibold text-neutral-900">{season.undertone}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-[10px] uppercase text-neutral-400 font-bold mb-1 tracking-widest">Confidence</p>
-                                            <p className="font-semibold text-neutral-900">{(season.confidence * 100).toFixed(0)}%</p>
-                                        </div>
-                                        <div className="col-span-2">
-                                            <p className="text-[10px] uppercase text-neutral-400 font-bold mb-1 tracking-widest">Quality</p>
-                                            <p className="font-semibold text-neutral-900">{season.clarity} & {season.depth}</p>
-                                        </div>
-                                    </div>
+                            {/* Key Stats */}
+                            <div className="w-full space-y-5 rpt-stats">
+                                <div className="flex justify-between items-center border-b border-white/10 rpt-divider pb-4">
+                                    <span className="text-xs text-white/40 rpt-muted font-semibold uppercase tracking-wider">Season</span>
+                                    <span className="flex items-center gap-2.5">
+                                        <div 
+                                            className="w-4 h-4 rounded-full border border-white/20 rpt-skin-dot shadow-sm"
+                                            style={{ backgroundColor: skin.hex_actual }}
+                                        />
+                                        <span className="font-serif text-lg font-medium text-white rpt-value">{_season12}</span>
+                                    </span>
                                 </div>
-
-                                {/* BEST COLORS */}
-                                <div className="print-break-inside">
-                                    <p className="text-[11px] uppercase text-neutral-400 font-black mb-5 tracking-[0.2em]">Power Palette</p>
-                                    <div className="grid grid-cols-5 gap-3 md:gap-4 print:flex print:flex-wrap">
-                                        {best_colors.map((hex, i) => (
-                                            <div key={i} className="flex flex-col items-center gap-2">
-                                                <div
-                                                    className="w-full aspect-square rounded-full shadow-inner border border-black/5 transition-transform hover:scale-110"
-                                                    style={{ backgroundColor: hex, printColorAdjust: 'exact' }}
-                                                />
-                                                <p className="text-[8px] font-mono text-neutral-400 uppercase">{hex}</p>
-                                            </div>
-                                        ))}
-                                    </div>
+                                <div className="flex justify-between items-center border-b border-white/10 rpt-divider pb-4">
+                                    <span className="text-xs text-white/40 rpt-muted font-semibold uppercase tracking-wider">Undertone</span>
+                                    <span className="font-medium text-white rpt-value">{season.undertone}</span>
                                 </div>
-
-                                {/* NEUTRALS */}
-                                <div className="print-break-inside">
-                                    <p className="text-[11px] uppercase text-neutral-400 font-black mb-5 tracking-[0.2em]">Essentials</p>
-                                    <div className="flex gap-4">
-                                        {neutrals.map((hex, i) => (
-                                            <div key={i} className="flex flex-col items-center gap-2">
-                                                <div
-                                                    className="w-10 h-10 rounded-full border border-neutral-100 shadow-sm"
-                                                    style={{ backgroundColor: hex, printColorAdjust: 'exact' }}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
+                                <div className="flex justify-between items-center border-b border-white/10 rpt-divider pb-4">
+                                    <span className="text-xs text-white/40 rpt-muted font-semibold uppercase tracking-wider">Depth & Clarity</span>
+                                    <span className="font-medium text-white rpt-value">{season.depth} & {season.clarity}</span>
                                 </div>
-
-                                {/* AVOID COLORS */}
-                                <div className="bg-red-50/50 rounded-3xl p-6 border border-red-100 flex flex-col gap-5 print:bg-white print:border-neutral-200 print-break-inside">
-                                    <div className="flex items-center gap-2 text-red-400">
-                                        <AlertTriangle className="w-4 h-4" />
-                                        <span className="text-[10px] uppercase font-black tracking-[0.2em]">Avoid These</span>
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-3">
-                                        {avoid_colors.slice(0, 10).map((hex, i) => (
-                                            <div key={i} className="w-8 h-8 rounded-full border border-black/5 relative shadow-sm">
-                                                <div className="absolute inset-0 rounded-full" style={{ backgroundColor: hex, printColorAdjust: 'exact' }} />
-                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                    <div className="w-[1.5px] h-full bg-white/40 rotate-45" />
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Bottom Disclaimer - part of flow */}
-                                <div className="pt-10 border-t border-neutral-100 text-[10px] leading-relaxed text-neutral-400 print:text-neutral-500">
-                                    <p className="flex items-start gap-2">
-                                        <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 opacity-40" />
-                                        <span>
-                                            <strong>Disclaimer:</strong> {disclaimerText}
-                                        </span>
-                                    </p>
+                                <div className="flex justify-between items-center pt-1">
+                                    <span className="text-xs text-white/40 rpt-muted font-semibold uppercase tracking-wider">Analysis Date</span>
+                                    <span className="text-sm text-white/60 rpt-muted">{analysisDate}</span>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
+                    </div>
 
-                        {/* DESKTOP FOOTER ACTIONS - part of flow */}
-                        <div className="hidden md:flex gap-4 mt-12 no-print">
-                            <button onClick={handlePrint} className="flex-1 py-4 bg-white border border-neutral-200 text-neutral-900 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-neutral-50 transition-all flex items-center justify-center gap-2 shadow-sm">
-                                <Download className="w-4 h-4" /> Download Report
-                            </button>
-                            <button onClick={handleShare} className="flex-1 py-4 bg-black text-white rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 shadow-xl">
-                                <Share2 className="w-4 h-4" /> Share My Results
-                            </button>
-                        </div>
-                    </motion.div>
+                    {/* RIGHT COLUMN: Color Cards */}
+                    <div className="md:col-span-7 flex flex-col gap-6 md:gap-8 min-w-0 rpt-right">
+                        
+                        {/* YOUR BEST COLORS */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
+                            className="rpt-card bg-white/5 backdrop-blur-2xl rounded-[2rem] p-8 md:p-10 shadow-2xl border border-white/10"
+                        >
+                            <div className="mb-6">
+                                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-white/50 rpt-muted mb-1">Your Best Colors</h3>
+                                <p className="text-sm text-white/70 rpt-sub">Your core seasonal colors. Wear these close to your face for maximum impact.</p>
+                            </div>
+                            <div className="grid grid-cols-5 gap-y-8 gap-x-4 rpt-best-grid">
+                                {best_colors.map((hex, i) => (
+                                    <div key={i} className="flex flex-col items-center gap-3">
+                                        <div
+                                            className="rpt-swatch-circle w-12 h-12 md:w-16 md:h-16 rounded-full shadow-inner border border-white/10 rpt-swatch"
+                                            style={{ backgroundColor: hex }}
+                                        />
+                                        <p className="rpt-hex-label text-[9px] md:text-[10px] font-mono text-white/40 rpt-muted uppercase tracking-widest">{hex}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        {/* YOUR NEUTRALS */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}
+                            className="rpt-card bg-white/5 backdrop-blur-2xl rounded-[2rem] p-8 md:p-10 shadow-2xl border border-white/10"
+                        >
+                            <div className="mb-6">
+                                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-white/50 rpt-muted mb-1">Your Neutrals</h3>
+                                <p className="text-sm text-white/70 rpt-sub">Your go-to neutrals for foundational pieces, coats, and trousers.</p>
+                            </div>
+                            <div className="flex flex-wrap gap-4">
+                                {neutrals.map((hex, i) => (
+                                    <div
+                                        key={i}
+                                        className="rpt-neutral-swatch w-14 h-14 md:w-20 md:h-20 rounded-2xl border border-white/20 rpt-swatch shadow-sm"
+                                        style={{ backgroundColor: hex }}
+                                    />
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        {/* SHADES TO AVOID */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}
+                            className="rpt-avoid bg-red-950/20 backdrop-blur-2xl rounded-[2rem] p-8 md:p-10 border border-red-500/20"
+                        >
+                            <div className="mb-6">
+                                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-red-400 rpt-avoid-title mb-1 flex items-center gap-2">
+                                    <AlertTriangle className="w-3.5 h-3.5" /> Shades To Avoid
+                                </h3>
+                                <p className="text-sm text-red-200/60 rpt-avoid-desc">Colors that may clash with your natural undertone or wash you out.</p>
+                            </div>
+                            <div className="flex flex-wrap gap-4">
+                                {avoid_colors.slice(0, 9).map((hex, i) => (
+                                    <div key={i} className="rpt-avoid-swatch w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 rpt-swatch shadow-sm relative overflow-hidden">
+                                        <div className="absolute inset-0" style={{ backgroundColor: hex }} />
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[2px] bg-white/70 rotate-45" />
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
                 </div>
 
-                {/* MOBILE FIXED ACTIONS - With blur and proper spacing to not overlap card content if scrolled to bottom */}
-                <div className="md:hidden fixed bottom-6 left-6 right-6 z-30 flex gap-3 no-print">
-                    <button onClick={handlePrint} className="w-14 h-14 flex items-center justify-center bg-white border border-neutral-200 text-neutral-900 rounded-2xl shadow-2xl active:scale-90 transition-transform">
-                        <Download className="w-5 h-5" />
+                {/* SIGNATURE COMBINATIONS */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+                    className="mt-10 md:mt-14"
+                >
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-white/50 rpt-muted">Signature Combinations</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {signatureCombinations.map((combo, idx) => (
+                            <div key={idx} className="rpt-card bg-white/5 backdrop-blur-2xl rounded-[2rem] p-8 shadow-2xl border border-white/10 flex flex-col items-center text-center">
+                                <div className="flex items-center justify-center mb-6 h-20">
+                                    {combo.colors.map((hex, cIdx) => (
+                                        <div 
+                                            key={cIdx} 
+                                            className="w-16 h-16 rounded-full border-4 border-[#1A1817] shadow-xl relative"
+                                            style={{ 
+                                                backgroundColor: hex,
+                                                marginLeft: cIdx === 0 ? '0' : '-1.5rem',
+                                                zIndex: combo.colors.length - cIdx 
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+                                <h4 className="font-bold text-white rpt-heading text-sm uppercase tracking-widest mb-2 font-serif">{combo.title}</h4>
+                                <p className="text-white/50 text-[11px] leading-relaxed rpt-sub">{combo.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* STYLE GUIDE â€” Full Width 3-Column */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
+                    className="mt-10 md:mt-14 rpt-style-grid"
+                >
+                    <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-white/50 rpt-muted mb-6">Style Guide</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="rpt-guide bg-white/5 backdrop-blur-2xl rounded-[2rem] p-8 shadow-2xl border border-white/10">
+                            <h4 className="font-bold text-white rpt-guide-title text-sm uppercase tracking-widest mb-3 font-serif">Your Vibe</h4>
+                            <p className="text-white/60 rpt-guide-text text-sm leading-relaxed">{advice.vibe}</p>
+                        </div>
+                        <div className="rpt-guide bg-white/5 backdrop-blur-2xl rounded-[2rem] p-8 shadow-2xl border border-white/10">
+                            <h4 className="font-bold text-white rpt-guide-title text-sm uppercase tracking-widest mb-3 font-serif">Fashion & Fabrics</h4>
+                            <p className="text-white/60 rpt-guide-text text-sm leading-relaxed">{advice.fashion}</p>
+                        </div>
+                        <div className="rpt-guide bg-white/5 backdrop-blur-2xl rounded-[2rem] p-8 shadow-2xl border border-white/10">
+                            <h4 className="font-bold text-white rpt-guide-title text-sm uppercase tracking-widest mb-3 font-serif">Beauty Harmonies</h4>
+                            <p className="text-white/60 rpt-guide-text text-sm leading-relaxed">{advice.makeup}</p>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* FOOTER */}
+                <footer className="rpt-footer mt-16 pt-10 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-8 pb-10">
+                    <div>
+                        <h2 className="text-2xl font-serif font-bold text-white rpt-footer-brand mb-1">Personal Color Analysis</h2>
+                        <p className="text-sm text-white/50 rpt-footer-sub font-medium mb-3">AI-Powered Seasonal Color Analysis</p>
+                        <p className="text-xs text-white/40 rpt-muted mb-1">
+                            <a href="https://personalcoloranalysis.madsoul.in/" target="_blank" rel="noreferrer" className="text-white/70 rpt-footer-link font-semibold underline hover:text-white">personalcoloranalysis.madsoul.in</a>
+                        </p>
+                        <p className="text-xs text-white/30 rpt-muted">Generated {analysisDate}</p>
+                    </div>
+                    <div className="w-24 h-24 bg-white p-2 rounded-xl shadow-2xl border border-white/10 flex items-center justify-center">
+                        <img src="/qr-code.png" alt="Scan QR Code" className="w-full h-full object-contain" onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="%23f0f0f0"><rect width="100" height="100"/></svg>';
+                        }} />
+                    </div>
+                </footer>
+
+                {/* MOBILE FAB */}
+                <div className="fixed bottom-6 w-full px-6 flex justify-center gap-4 md:hidden z-50 no-capture" style={{ left: 0 }}>
+                    <button onClick={handleDownload} disabled={isDownloading} className="w-14 h-14 bg-white text-neutral-900 rounded-full shadow-2xl shadow-black/20 flex items-center justify-center border border-black/5 hover:scale-105 transition-transform disabled:opacity-50">
+                        {isDownloading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
                     </button>
-                    <button onClick={handleShare} className="flex-1 h-14 bg-black text-white rounded-2xl font-bold text-xs uppercase tracking-[0.2em] shadow-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
-                        <Share2 className="w-5 h-5" /> Share Result
+                    <button onClick={handleShare} className="flex-1 max-w-[200px] h-14 bg-[#4A3d36] text-white rounded-full shadow-2xl flex items-center justify-center gap-2 font-bold text-sm tracking-widest uppercase hover:bg-black transition-colors">
+                        <Share2 className="w-4 h-4" /> Share
                     </button>
                 </div>
             </div>
-
         </div>
     );
 }
+

@@ -35,12 +35,13 @@ export default function Home() {
   const [showCamera, setShowCamera] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [view, setView] = useState<'main' | 'history'>('main');
+  const [reportSource, setReportSource] = useState<'main' | 'history'>('main');
 
   // Analysis State
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  // Dev-only engine version toggle (defaults to v1 for safety)
-  const [engineVersion, setEngineVersion] = useState<string>("v1");
+  // Engine version toggle (defaults to v2 for latest model)
+  const [engineVersion, setEngineVersion] = useState<string>("v2");
   const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === "true";
 
   // History State
@@ -103,6 +104,7 @@ export default function Home() {
   const handleHistorySelect = (item: any) => {
     setResult(item);
     setImagePreview(item.image_url);
+    setReportSource('history');
     setView('main');
   };
 
@@ -143,6 +145,7 @@ export default function Home() {
       setError(data.error);
     } else {
       setResult(data);
+      setReportSource('main');
       fetchHistory(); // Refresh history after new analysis
     }
   };
@@ -161,6 +164,18 @@ export default function Home() {
     setImagePreview(null);
     setSelectedFile(null);
     setView('main');
+    setReportSource('main');
+  };
+
+  const handleCloseReport = () => {
+    setResult(null);
+    setImagePreview(null);
+    if (reportSource === 'history') {
+      setView('history');
+    } else {
+      setView('main');
+    }
+    setReportSource('main');
   };
 
   // Main Navigation logic
@@ -192,6 +207,7 @@ export default function Home() {
           data={result}
           image={imagePreview}
           onReset={handleReset}
+          onClose={handleCloseReport}
         />
       ) : showLanding ? (
         <LandingPage onStart={handleStartAnalysis} />
@@ -343,7 +359,7 @@ export default function Home() {
                     onComplete={handleAnalysisComplete}
                     onRetake={handleReset}
                     onUpgrade={() => setShowCheckout(true)}
-                    engineVersion={isDevMode ? engineVersion : undefined}
+                    engineVersion={engineVersion}
                   />
                 </div>
               )}

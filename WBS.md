@@ -221,3 +221,30 @@ Phase 8 – Enhanced Face Validation (V6)
 8.2. Integrate `detectFace` into `CameraCapture.tsx` (Live mode).
 8.3. Integrate `detectFace` into `UploadForm.tsx` (Upload mode).
 8.4. Implement "No Face Detected" UI overlays with modern aesthetics.
+
+Phase 9 – Report Redesign & Clothing Suggestions (V7) ⬅ NEXT PRIORITY
+
+9.1. Fix "Avoid Colors" palette missing from downloaded PDF/print report.
+9.2. Redesign `FashionResultsView.tsx` print/PDF layout:
+    - Match app's luxury aesthetic (warm rose-beige palette, Playfair serif headings).
+    - Structured sections: Profile, Season, Power Palette, Neutrals, Avoid Colors.
+    - Proper page breaks for multi-page PDF output.
+9.3. Fix mobile results view:
+    - Ensure actual skin tone swatch is visible on mobile.
+    - Improve overall structure and readability on small screens.
+9.4. Add "Style Suggestions" section to report:
+    - Best clothing types for the user's season (e.g., "Earth tones, warm metals").
+    - 3-4 outfit combination ideas with color swatches.
+    - Seasonal accessory and makeup tone recommendations.
+9.5. Test PDF download across browsers and verify all sections render.
+
+Phase 10 – Licensing & IP Protection (V8)
+
+10.1. Research license options:
+    - BSL (Business Source License) for commercial protection with open viewing.
+    - AGPL for strong copyleft.
+    - Proprietary with "view only" public source.
+10.2. Add LICENSE file to GitHub repository root.
+10.3. Add license header/notice to key source files (`engine.py`, `engine_v2.py`, `predict.py`).
+10.4. Add license/terms to Replicate model page description.
+10.5. Add license notice to web app footer.

@@ -59,6 +59,17 @@ V6: Enhanced Face Validation
 - Mandatory client-side face detection before uploading/capturing.
 - User feedback for poor lighting or non-human subjects.
 
+V7: Report Redesign & Clothing Suggestions ⬅ NEXT PRIORITY
+- Fix: Downloaded PDF report must include "Avoid Colors" palette (currently missing).
+- Redesign PDF/print report to match the app's luxury aesthetic (warm palette, Playfair serif headings, structured layout).
+- Fix mobile results view to properly show the user's actual skin tone swatch.
+- Add "Style Suggestions" section at the end of the report: recommended clothing types, color combinations, and outfit ideas based on the user's season.
+
+V8: Licensing & IP Protection
+- Add a license to the GitHub repository (e.g., BSL, AGPL, or proprietary).
+- Add a license/terms to the Replicate model page.
+- Ensure any re-use of the engine or web app requires licensing compliance.
+
 Non-goals (for now):
 
 Full multi-language support.

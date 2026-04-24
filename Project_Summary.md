@@ -1,7 +1,7 @@
 # Project Summary: Personal Color Test (PCT)
 
-**Current Status:** Phase 12: Engine v2 Implemented (A/B Testing Ready)
-**Last Updated:** 2026-03-10
+**Current Status:** Phase 13: Report V8 Editorial Redesign + Image Export + Signature Combinations
+**Last Updated:** 2026-04-23
 
 ## Deployment Status
 - **Auth**: Clerk Auth with optional **Test Bypass** (`NEXT_PUBLIC_SKIP_AUTH`) to resolve local clock skew blockers.
@@ -16,7 +16,7 @@
     - **Status**: Stable v1.1. Resolved duplication race conditions and broken base64 previews.
 
 ## Overview
-This project is now a full-featured "Fashion Buddy" platform. Users can create profiles via Clerk, track their results timeline, and receive 12-season analysis with PDF reports. A deep technical diagnosis of the core analysis engine has been completed, identifying critical issues and defining the v2.0 improvement roadmap.
+This project is now a full-featured "Fashion Buddy" platform. Users can create profiles via Clerk, track their results timeline, and receive 12-season analysis with premium editorial reports. The report features a dark glassmorphic editorial design, image-based export (replacing PDF), and AI-powered Signature Color Combinations using HSL color theory math. Engine v2 is now the default model.
 
 ## Feature Set
 
@@ -52,14 +52,89 @@ This project is now a full-featured "Fashion Buddy" platform. Users can create p
 - [x] Phase 10: Refinements & Clerk Migration.
 - [x] Phase 11: Security & Stability.
 - [/] Phase 12: Engine Model Diagnosis & v2.0 Planning.
+- [/] Phase 13: Report V8 Editorial Redesign, Image Export, Signature Combinations.
+
+### Phase 13: Report V8 Editorial Redesign (Current)
+- **Editorial Layout Overhaul**: Transformed `FashionResultsView.tsx` into a premium dark glassmorphic editorial report with Bento Box grid (5/7 column split), hero portrait, and 3-column Style Guide.
+- **Image Export**: Replaced `window.print()` PDF generation with `html-to-image` screenshot capture at 2x pixel ratio. Removed all `@media print` CSS. Export produces a pixel-perfect PNG matching the web report exactly.
+- **Signature Combinations (HSL Color Theory)**: Added 3 algorithmically generated outfit color combinations:
+  - *The Core Foundation*: Darkest neutral + highest-saturation accent (dark+light contrast).
+  - *Tonal Harmony*: Two analogous hues (within 45° on color wheel) + mid-tone neutral.
+  - *The Editorial Edge*: Darkest neutral + lightest neutral + bold accent (3-piece high contrast).
+  - Uses `hexToHSL()` conversion with sorting by lightness/saturation to guarantee fashion-safe pairings.
+- **Engine v2 Default**: Changed default `engineVersion` from `v1` to `v2` and removed dev-mode gating — all users (dev + production) now use the latest model.
+- **Information Architecture**: Removed technical diagnostic clutter (confidence scores, ITA values, hue degrees). Introduced analysis date. Softened "Shades to Avoid" visual treatment. Limited avoid palette to 9 colors for clean grid layout.
+- **Hex Codes Retained**: Kept hex codes under Best Colors swatches as proof of AI calculation per user request.
 
 ## Known Risks & Decisions
 - **Risk**: Undertone misclassification for warm-to-neutral skin tones due to white-balance-then-classify pipeline design.
 - **Decision**: v2.0 will classify on raw stats and score palettes on corrected stats (pipeline split).
 - **Risk**: Segmentation model (FaceParseNet50/CelebAMask-HQ) has documented bias toward lighter skin tones.
 - **Decision**: Segmentation upgrade (BiSeNet V2 or similar) deferred to Phase H of v2.0 roadmap; quick wins first.
+- **Risk**: `.env.local` was committed to git via `!.env.local` in `.gitignore` — deployed test Clerk keys to Vercel.
+- **Decision**: Removed `!.env.local` from `.gitignore`, untracked from git. All env vars must be set in Vercel dashboard.
+- **Decision**: `supabaseAdmin.ts` uses lazy Proxy pattern to avoid build-time crashes when env vars are missing.
 
 ## Changelog
+- **2026-04-22/23 (Phase 13: Report V8 + Image Export + Combinations)**:
+    - **Report Editorial Overhaul**: Complete redesign of `FashionResultsView.tsx` into premium dark glassmorphic editorial layout. Bento Box grid (5/7 split), hero portrait, 3-column Style Guide, and analysis date.
+    - **Image Export (replacing PDF)**: Installed `html-to-image`. Implemented `toPng()` capture at 2x pixel ratio with `no-capture` class-based button hiding. Removed entire `@media print` CSS block (~50 lines). Button label changed from "PDF" to "Save Image" with loading spinner.
+    - **Signature Combinations**: Added `hexToHSL()` color theory math. 3 algorithmically generated outfit combos using hue distance, saturation sorting, and lightness contrast. Fashion-appropriate titles: "The Core Foundation", "Tonal Harmony", "The Editorial Edge".
+    - **Engine v2 Default**: Changed `useState<string>("v1")` → `useState<string>("v2")` in `page.tsx`. Removed `isDevMode` guard from `engineVersion` prop — now always sent.
+    - **UI Cleanup**: Avoid palette limited to 9 colors. Technical data (confidence, ITA, hue degrees) hidden from main report.
+- **2026-03-14 (Phase 9: V7 Report Redesign Started)**:
+    - **Bento Box Layout**: Redesigned `FashionResultsView.tsx` into an asymmetrical grid layout. Added a sticky left profile card (Detected Skin Base, Core Stats, Photo).
+    - **Right Layout Stack**: Added 4 scrollable sections: 01. Power Palette (Circles), 02. Wardrobe Essentials (Soft Squares), 03. Shades to Avoid (Circles with Strikethrough), 04. Styling Suggestions (Dynamic Text).
+    - **Dynamic Backgrounds**: Added dynamic season-based gradients (e.g., warm rose-beige for Autumn/Spring).
+    - **Footer Branding**: Added a prominent brand footer with logo/QR Code for the PDF export.
+    - **Pending**: User review and minor tweaks before finalizing the PDF print reliability.
+- **2026-03-12 (Analytics)**:
+    - **Daily Analytics View**: Created `daily_analytics_summary` SQL view in Supabase to track daily metrics: new users, total generations, active generating users, generations by new users on their join day, and daily failure counts.
+    - **SQL snippet**:
+      ```sql
+      CREATE OR REPLACE VIEW public.daily_analytics_summary AS
+      WITH daily_users AS (
+        SELECT DATE(created_at) as raw_date, COUNT(id) as new_users_count FROM public.profiles GROUP BY DATE(created_at)
+      ),
+      daily_generations AS (
+        SELECT DATE(ar.created_at) as raw_date, COUNT(ar.id) as total_generations, COUNT(DISTINCT s.profile_id) as active_users_count
+        FROM public.analysis_results ar JOIN public.subjects s ON ar.subject_id = s.id GROUP BY DATE(ar.created_at)
+      ),
+      daily_failures AS (
+        SELECT DATE(created_at) as raw_date, COUNT(*) as failures_count FROM public.tracking_logs WHERE status = 'failed' GROUP BY DATE(created_at)
+      ),
+      generations_by_new_users AS (
+        SELECT DATE(ar.created_at) as raw_date, COUNT(ar.id) as gens_by_new_users
+        FROM public.analysis_results ar JOIN public.subjects s ON ar.subject_id = s.id JOIN public.profiles p ON s.profile_id = p.id
+        WHERE DATE(ar.created_at) = DATE(p.created_at) GROUP BY DATE(ar.created_at)
+      ),
+      all_dates AS (
+        SELECT merge_date as dt FROM (
+          SELECT raw_date as merge_date FROM daily_users UNION SELECT raw_date FROM daily_generations UNION SELECT raw_date FROM daily_failures
+        ) dates WHERE merge_date IS NOT NULL
+      ),
+      daily_stats AS (
+        SELECT d.dt AS report_date, COALESCE(u.new_users_count, 0) AS new_users, COALESCE(g.total_generations, 0) AS total_generations,
+               COALESCE(g.active_users_count, 0) AS active_users, COALESCE(nu_gen.gens_by_new_users, 0) AS gens_by_new_users, COALESCE(f.failures_count, 0) AS failures
+        FROM all_dates d LEFT JOIN daily_users u ON d.dt = u.raw_date LEFT JOIN daily_generations g ON d.dt = g.raw_date
+        LEFT JOIN daily_failures f ON d.dt = f.raw_date LEFT JOIN generations_by_new_users nu_gen ON d.dt = nu_gen.raw_date
+      )
+      SELECT COALESCE(TO_CHAR(report_date, 'YYYY-MM-DD'), 'GRAND TOTAL') AS "Date", SUM(new_users) AS "New Users", SUM(total_generations) AS "Total Generations", SUM(gens_by_new_users) AS "Gens by New Users", SUM(active_users) AS "Active Users",
+             ROUND(CASE WHEN SUM(active_users) > 0 THEN SUM(total_generations)::numeric / SUM(active_users) ELSE 0 END, 2) AS "Gens per Active User",
+             ROUND(CASE WHEN SUM(new_users) > 0 THEN SUM(gens_by_new_users)::numeric / SUM(new_users) ELSE 0 END, 2) AS "Gens per New User", SUM(failures) AS "Failures Count"
+      FROM daily_stats GROUP BY ROLLUP(report_date) ORDER BY report_date DESC NULLS FIRST;
+      ```
+- **2026-03-11 (Session 3 — Deployment Debugging)**:
+    - **Vercel Deployment Roadblocks & Fixes**:
+        1. ❌ `npm install` failed: `react@19.2.1` didn't satisfy `@clerk/nextjs@6.38.2` peer dep `~19.2.3` → **Fix**: bumped to `react@19.2.4`
+        2. ❌ Runtime `MIDDLEWARE_INVOCATION_FAILED`: `.gitignore` had `!.env.local` which committed test Clerk keys to git → **Fix**: removed `!.env.local`, ran `git rm --cached`
+        3. ❌ Build crash at "Collecting page data": `supabaseAdmin.ts` threw at module load when `SUPABASE_SERVICE_ROLE_KEY` missing → **Fix**: rewrote to Proxy-based lazy initialization
+    - **Commits**: `482805b` (react bump), `5afab15` (.env.local removal), `4a744b8` (lazy supabaseAdmin)
+    - **Status**: Build passes locally, awaiting Vercel confirmation with all env vars set
+    - **Next Session Priorities**:
+        1. Report redesign (avoid palette missing, aesthetics, mobile view)
+        2. Clothing suggestions in report
+        3. Licensing (repo + Replicate model)
 - **2026-03-11 (Session 2)**:
     - **Tier Changes**: Free tier limit updated from 5 → 3 generations (`route.ts`, `AnalysisLoader.tsx`). Pro tier set to "Unlimited — Coming Soon" in landing page.
     - **Landing Page Redesign**: Complete rewrite of `LandingPage.tsx` with 8 sections: hero, wrong-vs-right colors, how-it-works 3-step, 4-season cards, pricing (Free/Pro), final CTA, footer. Scroll-reveal animations, warm rose-beige palette, Playfair serif headings. SEO meta tags added to `layout.tsx` (title, description, keywords, OpenGraph, Twitter).
@@ -68,7 +143,6 @@ This project is now a full-featured "Fashion Buddy" platform. Users can create p
         - Removed `fs.appendFileSync` from `authHelper.ts` (would crash on Vercel read-only filesystem)
         - Removed deprecated `getAuth(request)` fallback (caused TypeScript build failure — `Request` vs `NextRequest`)
         - Removed dead `base64Image` computation from `analyze/route.ts`
-    - **Build Status**: `npm run build` passes locally (exit code 0, all 6 routes compile). **Vercel build failed** — needs investigation next session.
     - **Env Var Checklist**: Documented required/prohibited Vercel env vars (REPLICATE_API_TOKEN, REPLICATE_MODEL_ID, NEXT_PUBLIC_APP_URL required; SKIP_AUTH, DEV_MODE must NOT be set).
 - **2026-03-11 (Session 1)**:
     - **Replicate Deployment**: Pushed v2 engine to Replicate via GitHub Actions (commit `c192b31`). Both v1 and v2 engines live and selectable via `model_version` input param.
